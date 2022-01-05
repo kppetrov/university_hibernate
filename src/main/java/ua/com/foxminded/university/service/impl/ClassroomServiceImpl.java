@@ -48,18 +48,18 @@ public class ClassroomServiceImpl implements ClassroomService {
     }
 
     @Override
-    public int update(Classroom item) {
+    public void update(Classroom item) {
         try {
-            return classroomDao.update(item);
+            classroomDao.update(item);
         } catch (DaoException e) {
             throw new ServiceException(e.getMessage(), e);
         }
     }
 
     @Override
-    public int delete(int id) {
+    public void delete(int id) {
         try {
-            return classroomDao.delete(id);
+            classroomDao.delete(id);
         } catch (DaoException e) {
             throw new ServiceException(e.getMessage(), e);
         }

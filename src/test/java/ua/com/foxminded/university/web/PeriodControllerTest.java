@@ -116,7 +116,6 @@ class PeriodControllerTest {
     @Test
     void testEdit() throws Exception {      
         when(modelMapper.map(periodModel, Period.class)).thenReturn(period);   
-        when(periodService.update(period)).thenReturn(1);
         mockMvc.perform(post("/periods/update")
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                         .param("id", "1")

@@ -2,7 +2,6 @@ package ua.com.foxminded.university.web;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -154,7 +153,6 @@ class CourseControllerTest {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.addAll("groups", values);
         
-        when(courseService.update(isA(Course.class))).thenReturn(1);
         mockMvc.perform(post("/courses/update")
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                         .param("id", "1")

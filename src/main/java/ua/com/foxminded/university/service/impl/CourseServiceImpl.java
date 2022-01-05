@@ -48,18 +48,18 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public int update(Course item) {
+    public void update(Course item) {
         try {
-            return courseDao.update(item);
+            courseDao.update(item);
         } catch (DaoException e) {
             throw new ServiceException(e.getMessage(), e);
         }
     }
 
     @Override
-    public int delete(int id) {
+    public void delete(int id) {
         try {
-            return courseDao.delete(id);
+            courseDao.delete(id);
         } catch (DaoException e) {
             throw new ServiceException(e.getMessage(), e);
         }

@@ -94,14 +94,10 @@ class CourseDaoJdbcTest {
     @Sql(value = { "/insert-data.sql" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(value = { "/remove-data.sql" }, executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
     void testUpdate() {
-        Course course = new Course(1, "new name");
-        
-        int countUpdate = dao.update(course);
+        Course course = new Course(1, "new name");        
+        dao.update(course);
         Course actual = dao.getById(course.getId());
-        assertAll(
-                () -> assertEquals(1, countUpdate), 
-                () -> assertEquals(course, actual)
-                );
+        assertEquals(course, actual);
     }
 
     @Test
@@ -109,13 +105,10 @@ class CourseDaoJdbcTest {
     @Sql(value = { "/remove-data.sql" }, executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
     void testDelete() {
         int id = 1;
-        int countDelete = dao.delete(id);
+        dao.delete(id);
         String msg = String.format(ID_NOT_EXIST, id);       
         DaoException exception = assertThrows(DaoException.class, () -> dao.getById(id));
-        assertAll(
-                () -> assertEquals(1, countDelete), 
-                () -> assertEquals(msg, exception.getMessage())
-                );
+        assertEquals(msg, exception.getMessage());
     }
 
     @Test

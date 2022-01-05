@@ -73,12 +73,9 @@ class ClassroomDaoJdbcTest {
     @Sql(value = { "/remove-data.sql" }, executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
     void testUpdate() {
         Classroom classroom = new Classroom(1, "new name");
-        int countUpdate = dao.update(classroom);
+        dao.update(classroom);
         Classroom actual = dao.getById(classroom.getId());
-        assertAll(
-                () -> assertEquals(1, countUpdate), 
-                () -> assertEquals(classroom, actual)
-                );
+        assertEquals(classroom, actual);
     }
 
     @Test
@@ -86,12 +83,9 @@ class ClassroomDaoJdbcTest {
     @Sql(value = { "/remove-data.sql" }, executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
     void testDelete() {
         int id = 1;
-        int countDelete = dao.delete(id);
+        dao.delete(id);
         String msg = String.format(ID_NOT_EXIST, id);        
         DaoException exception = assertThrows(DaoException.class, () -> dao.getById(id));
-        assertAll(
-                () -> assertEquals(1, countDelete), 
-                () -> assertEquals(msg, exception.getMessage())
-                );
+        assertEquals(msg, exception.getMessage());
     }
 }

@@ -116,7 +116,6 @@ class GroupControllerTest {
     @Test
     void testEdit() throws Exception {      
         when(modelMapper.map(groupModel, Group.class)).thenReturn(group);   
-        when(groupService.update(group)).thenReturn(1);
         mockMvc.perform(post("/groups/update")
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                         .param("id", "1")

@@ -76,12 +76,9 @@ class PeriodDaoJdbcTest {
     @Sql(value = { "/remove-data.sql" }, executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
     void testUpdate() {
         Period period = new Period(1, "new name", LocalTime.of(11, 20), LocalTime.of(12, 50));
-        int countUpdate = dao.update(period);
+        dao.update(period);
         Period actual = dao.getById(period.getId());
-        assertAll(
-                () -> assertEquals(1, countUpdate), 
-                () -> assertEquals(period, actual)
-                );
+        assertEquals(period, actual);
     }
 
     @Test
@@ -90,11 +87,8 @@ class PeriodDaoJdbcTest {
     void testDelete() {
         int id = 1;
         String msg = String.format(ID_NOT_EXIST, id);
-        int countDelete = dao.delete(id);        
+        dao.delete(id);        
         DaoException exception = assertThrows(DaoException.class, () -> dao.getById(id));
-        assertAll(
-                () -> assertEquals(1, countDelete), 
-                () -> assertEquals(msg, exception.getMessage())
-                );
+        assertEquals(msg, exception.getMessage());
     }
 }

@@ -90,10 +90,9 @@ class StudentDaoJdbcTest {
     @Sql(value = { "/remove-data.sql" }, executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
     void testUpdate() {
         Student student = new Student(1, "new first_name", "new last_name", Gender.MAIL, LocalDate.of(1980, 01, 01), group2);
-        int countUpdate = dao.update(student);
+        dao.update(student);
         Student actual = dao.getById(student.getId());
         assertAll(
-                () -> assertEquals(1, countUpdate), 
                 () -> assertEquals(student, actual),
                 () -> assertEquals(student.getGroup(), actual.getGroup())
                 );
@@ -105,11 +104,8 @@ class StudentDaoJdbcTest {
     void testDelete() {
         int id = 1;
         String msg = String.format(ID_NOT_EXIST, id);
-        int countDelete = dao.delete(id);        
+        dao.delete(id);        
         DaoException exception = assertThrows(DaoException.class, () -> dao.getById(id));
-        assertAll(
-                () -> assertEquals(1, countDelete), 
-                () -> assertEquals(msg, exception.getMessage())
-                );
+        assertEquals(msg, exception.getMessage());
     }
 }

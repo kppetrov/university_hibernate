@@ -99,7 +99,6 @@ class ClassroomControllerTest {
     
     @Test
     void testEdit() throws Exception {
-        when(classroomService.update(isA(Classroom.class))).thenReturn(1);
         mockMvc.perform(post("/classrooms/update")
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                         .param("id", "1")

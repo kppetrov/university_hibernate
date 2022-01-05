@@ -52,18 +52,18 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public int update(Student item) {
+    public void update(Student item) {
         try {
-            return studentDao.update(item);
+            studentDao.update(item);
         } catch (DaoException e) {
             throw new ServiceException(e.getMessage(), e);
         }
     }
 
     @Override
-    public int delete(int id) {
+    public void delete(int id) {
         try {
-            return studentDao.delete(id);
+            studentDao.delete(id);
         } catch (DaoException e) {
             throw new ServiceException(e.getMessage(), e);
         }

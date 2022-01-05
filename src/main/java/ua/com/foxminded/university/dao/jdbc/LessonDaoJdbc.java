@@ -92,7 +92,7 @@ public class LessonDaoJdbc extends AbstractDAO implements LessonDao {
     }
 
     @Override
-    public int update(Lesson item) {
+    public void update(Lesson item) {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Updating lesson. {}", item);
         }
@@ -104,20 +104,20 @@ public class LessonDaoJdbc extends AbstractDAO implements LessonDao {
                     .addValue("period_id", item.getPeriod().getId())
                     .addValue("classroom_id", item.getClassroom().getId())
                     .addValue("teacher_id", item.getTeacher().getId());
-            return jdbcTemplate.update(LESSON_UPDATE, namedParameters);
+            jdbcTemplate.update(LESSON_UPDATE, namedParameters);
         } catch (DataAccessException e) {
             throw new DaoException("Cannot update lesson. " + item, e);
         }
     }
 
     @Override
-    public int delete(int id) {
+    public void delete(int id) {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Removung lesson. id={}", id);
         }
         try {
             SqlParameterSource namedParameters = new MapSqlParameterSource("id", id);
-            return jdbcTemplate.update(LESSON_DELETE, namedParameters);
+            jdbcTemplate.update(LESSON_DELETE, namedParameters);
         } catch (DataAccessException e) {
             throw new DaoException("Cannot remove lesson. id=" + id, e);
         }

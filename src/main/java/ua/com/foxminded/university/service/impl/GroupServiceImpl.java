@@ -57,18 +57,18 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public int update(Group item) {
+    public void update(Group item) {
         try {
-            return groupDao.update(item);
+            groupDao.update(item);
         } catch (DaoException e) {
             throw new ServiceException(e.getMessage(), e);
         }
     }
 
     @Override
-    public int delete(int id) {
+    public void delete(int id) {
         try {
-            return groupDao.delete(id);
+            groupDao.delete(id);
         } catch (DaoException e) {
             throw new ServiceException(e.getMessage(), e);
         }

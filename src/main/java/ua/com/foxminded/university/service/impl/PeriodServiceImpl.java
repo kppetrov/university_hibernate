@@ -18,11 +18,7 @@ public class PeriodServiceImpl implements PeriodService {
 
     @Autowired
     public void setPeriodDao(PeriodDao periodDao) {
-        try {
-            this.periodDao = periodDao;
-        } catch (DaoException e) {
-            throw new ServiceException(e.getMessage(), e);
-        }
+        this.periodDao = periodDao;
     }
 
     @Override
@@ -53,18 +49,18 @@ public class PeriodServiceImpl implements PeriodService {
     }
 
     @Override
-    public int update(Period item) {
+    public void update(Period item) {
         try {
-            return periodDao.update(item);
+            periodDao.update(item);
         } catch (DaoException e) {
             throw new ServiceException(e.getMessage(), e);
         }
     }
 
     @Override
-    public int delete(int id) {
+    public void delete(int id) {
         try {
-            return periodDao.delete(id);
+            periodDao.delete(id);
         } catch (DaoException e) {
             throw new ServiceException(e.getMessage(), e);
         }

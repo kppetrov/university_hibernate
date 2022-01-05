@@ -80,27 +80,27 @@ public class ClassroomDaoJdbc extends AbstractDAO implements ClassroomDao {
     }
 
     @Override
-    public int update(Classroom item) {
+    public void update(Classroom item) {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Updating classroom. {}", item);
         }
         try {
             SqlParameterSource namedParameters = new MapSqlParameterSource().addValue("id", item.getId())
                     .addValue("name", item.getName());
-            return jdbcTemplate.update(CLASSROOM_UPDATE, namedParameters);
+            jdbcTemplate.update(CLASSROOM_UPDATE, namedParameters);
         } catch (DataAccessException e) {
             throw new DaoException("Cannot update classroom. " + item, e);
         }
     }
 
     @Override
-    public int delete(int id) {
+    public void delete(int id) {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Removung classroom. id={}", id);
         }
         try {
             SqlParameterSource namedParameters = new MapSqlParameterSource("id", id);
-            return jdbcTemplate.update(CLASSROOM_DELETE, namedParameters);
+            jdbcTemplate.update(CLASSROOM_DELETE, namedParameters);
         } catch (DataAccessException e) {
             throw new DaoException("Cannot remove classroom. id=" + id, e);
         }

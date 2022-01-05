@@ -52,18 +52,18 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public int update(Teacher item) {
+    public void update(Teacher item) {
         try {
-            return teacherDao.update(item);
+            teacherDao.update(item);
         } catch (DaoException e) {
             throw new ServiceException(e.getMessage(), e);
         }
     }
 
     @Override
-    public int delete(int id) {
+    public void delete(int id) {
         try {
-            return teacherDao.delete(id);
+            teacherDao.delete(id);
         } catch (DaoException e) {
             throw new ServiceException(e.getMessage(), e);
         }

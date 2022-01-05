@@ -86,7 +86,7 @@ public class StudentDaoJdbc extends AbstractDAO implements StudentDao {
     }
 
     @Override
-    public int update(Student item) {
+    public void update(Student item) {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Updating student. {}", item);
         }
@@ -98,20 +98,20 @@ public class StudentDaoJdbc extends AbstractDAO implements StudentDao {
                     .addValue("last_name", item.getLastName())
                     .addValue("gender", item.getGender().getValue())
                     .addValue("birthdate", Date.valueOf(item.getBirthdate()));
-            return jdbcTemplate.update(STUDENT_UPDATE, namedParameters);
+            jdbcTemplate.update(STUDENT_UPDATE, namedParameters);
         } catch (DataAccessException e) {
             throw new DaoException("Cannot update student. " + item, e);
         }
     }
 
     @Override
-    public int delete(int id) {
+    public void delete(int id) {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Removung student. id={}", id);
         }
         try {
             SqlParameterSource namedParameters = new MapSqlParameterSource("id", id);
-            return jdbcTemplate.update(STUDENT_DELETE, namedParameters);
+            jdbcTemplate.update(STUDENT_DELETE, namedParameters);
         } catch (DataAccessException e) {
             throw new DaoException("Cannot remove student. id=" + id, e);
         }

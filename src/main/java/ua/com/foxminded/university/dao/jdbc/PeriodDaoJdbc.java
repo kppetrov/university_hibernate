@@ -82,7 +82,7 @@ public class PeriodDaoJdbc extends AbstractDAO implements PeriodDao {
     }
 
     @Override
-    public int update(Period item) {
+    public void update(Period item) {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Updating period. {}", item);
         }
@@ -90,20 +90,20 @@ public class PeriodDaoJdbc extends AbstractDAO implements PeriodDao {
             SqlParameterSource namedParameters = new MapSqlParameterSource().addValue("id", item.getId())
                     .addValue("name", item.getName()).addValue("start_time", Time.valueOf(item.getStart()))
                     .addValue("end_time", Time.valueOf(item.getEnd()));
-            return jdbcTemplate.update(PERIOD_UPDATE, namedParameters);
+            jdbcTemplate.update(PERIOD_UPDATE, namedParameters);
         } catch (DataAccessException e) {
             throw new DaoException("Cannot update period. " + item, e);
         }
     }
 
     @Override
-    public int delete(int id) {
+    public void delete(int id) {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Removung period. id={}", id);
         }
         try {
             SqlParameterSource namedParameters = new MapSqlParameterSource("id", id);
-            return jdbcTemplate.update(PERIOD_DELETE, namedParameters);
+            jdbcTemplate.update(PERIOD_DELETE, namedParameters);
         } catch (DataAccessException e) {
             throw new DaoException("Cannot remove classroom. id=" + id, e);
         }

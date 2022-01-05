@@ -137,27 +137,27 @@ public class GroupDaoJdbc extends AbstractDAO implements GroupDao {
     }
 
     @Override
-    public int update(Group item) {
+    public void update(Group item) {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Updating group. {}", item);
         }
         try {
             SqlParameterSource namedParameters = new MapSqlParameterSource().addValue("id", item.getId())
                     .addValue("name", item.getName());
-            return jdbcTemplate.update(GROUP_UPDATE, namedParameters);
+            jdbcTemplate.update(GROUP_UPDATE, namedParameters);
         } catch (DataAccessException e) {
             throw new DaoException("Cannot update group. " + item, e);
         }
     }
 
     @Override
-    public int delete(int id) {
+    public void delete(int id) {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Removung group. id={}", id);
         }
         try {
             SqlParameterSource namedParameters = new MapSqlParameterSource("id", id);
-            return jdbcTemplate.update(GROUP_DELETE, namedParameters);
+            jdbcTemplate.update(GROUP_DELETE, namedParameters);
         } catch (DataAccessException e) {
             throw new DaoException("Cannot remove group. id=" + id, e);
         }

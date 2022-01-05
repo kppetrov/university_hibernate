@@ -64,7 +64,7 @@ public class LessonServiceImpl implements LessonService {
     }
 
     @Override
-    public int update(Lesson item) {
+    public void update(Lesson item) {
         if (teacherIsBusy(item.getDate(), item.getPeriod().getId(), item.getTeacher().getId(), item.getId())) {
             LOGGER.info(TEACHER_IS_BUSY_UPDATE);
             throw new ServiceException(TEACHER_IS_BUSY_UPDATE);
@@ -74,7 +74,7 @@ public class LessonServiceImpl implements LessonService {
             throw new ServiceException(CLASSROOM_IS_OCCUPIED_UPDATE);
         }
         try {
-            return lessonDao.update(item);
+            lessonDao.update(item);
         } catch (DaoException e) {
             throw new ServiceException(e.getMessage(), e);
         }
@@ -109,9 +109,9 @@ public class LessonServiceImpl implements LessonService {
     }
 
     @Override
-    public int delete(int id) {
+    public void delete(int id) {
         try {
-            return lessonDao.delete(id);
+            lessonDao.delete(id);
         } catch (DaoException e) {
             throw new ServiceException(e.getMessage(), e);
         }

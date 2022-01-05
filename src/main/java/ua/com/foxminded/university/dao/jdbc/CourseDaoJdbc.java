@@ -119,27 +119,27 @@ public class CourseDaoJdbc extends AbstractDAO implements CourseDao {
     }
 
     @Override
-    public int update(Course item) {
+    public void update(Course item) {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Updating course. {}", item);
         }
         try {
             SqlParameterSource namedParameters = new MapSqlParameterSource().addValue("id", item.getId())
                     .addValue("name", item.getName());
-            return jdbcTemplate.update(COURSE_UPDATE, namedParameters);
+            jdbcTemplate.update(COURSE_UPDATE, namedParameters);
         } catch (DataAccessException e) {
             throw new DaoException("Cannot update course. " + item, e);
         }
     }
 
     @Override
-    public int delete(int id) {
+    public void delete(int id) {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Removung course. id={}", id);
         }
         try {
             SqlParameterSource namedParameters = new MapSqlParameterSource("id", id);
-            return jdbcTemplate.update(COURSE_DELETE, namedParameters);
+            jdbcTemplate.update(COURSE_DELETE, namedParameters);
         } catch (DataAccessException e) {
             throw new DaoException("Cannot remove course. id=" + id, e);
         }
