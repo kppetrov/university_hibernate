@@ -2,6 +2,11 @@ package ua.com.foxminded.university.model;
 
 import java.time.LocalDate;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "teachers")
 public class Teacher extends AbstractPerson {
 
     public Teacher() {

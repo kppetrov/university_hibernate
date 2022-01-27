@@ -3,12 +3,41 @@ package ua.com.foxminded.university.model;
 import java.time.LocalDate;
 import java.util.Objects;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "lessons")
 public class Lesson {
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
+    
+    @ManyToOne
+    @JoinColumn(name = "course_id")
     private Course course;
+    
+    @Column(name = "date")
     private LocalDate date;
+    
+    @ManyToOne
+    @JoinColumn(name = "period_id")
     private Period period;
+    
+    @ManyToOne
+    @JoinColumn(name = "classroom_id")
     private Classroom classroom;
+    
+    @ManyToOne
+    @JoinColumn(name = "teacher_id")
     private Teacher teacher;
 
     public Lesson() {

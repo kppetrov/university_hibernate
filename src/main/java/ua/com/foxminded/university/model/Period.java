@@ -3,10 +3,29 @@ package ua.com.foxminded.university.model;
 import java.time.LocalTime;
 import java.util.Objects;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "periods")
 public class Period {
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
+    
+    @Column(name = "name")
     private String name;
+    
+    @Column(name = "start_time")
     private LocalTime start;
+    
+    @Column(name = "end_time")
     private LocalTime end;
 
     public Period() {

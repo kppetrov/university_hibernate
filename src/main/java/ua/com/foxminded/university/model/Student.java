@@ -2,7 +2,18 @@ package ua.com.foxminded.university.model;
 
 import java.time.LocalDate;
 
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "students")
 public class Student extends AbstractPerson {
+    
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "group_id")
     private Group group;
 
     public Student() {
