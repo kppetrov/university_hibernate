@@ -3,7 +3,9 @@ package ua.com.foxminded.university.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import ua.com.foxminded.university.dao.ClassroomDao;
 import ua.com.foxminded.university.exception.DaoException;
@@ -12,10 +14,12 @@ import ua.com.foxminded.university.model.Classroom;
 import ua.com.foxminded.university.service.ClassroomService;
 
 @Service
+@Transactional
 public class ClassroomServiceImpl implements ClassroomService {  
     private ClassroomDao classroomDao;
     
     @Autowired
+    @Qualifier("ClassroomDaoImpl")
     public void setClassroomDao(ClassroomDao classroomDao) {
         this.classroomDao = classroomDao;
     }
