@@ -3,7 +3,9 @@ package ua.com.foxminded.university.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import ua.com.foxminded.university.dao.CourseDao;
 import ua.com.foxminded.university.exception.DaoException;
@@ -12,10 +14,12 @@ import ua.com.foxminded.university.model.Course;
 import ua.com.foxminded.university.service.CourseService;
 
 @Service
+@Transactional
 public class CourseServiceImpl implements CourseService {
     private CourseDao courseDao;
 
     @Autowired
+    @Qualifier("CourseDaoImpl")
     public void setCourseDao(CourseDao courseDao) {
         this.courseDao = courseDao;
     }

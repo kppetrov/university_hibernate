@@ -3,7 +3,9 @@ package ua.com.foxminded.university.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import ua.com.foxminded.university.dao.GroupDao;
 import ua.com.foxminded.university.exception.DaoException;
@@ -12,10 +14,12 @@ import ua.com.foxminded.university.model.Group;
 import ua.com.foxminded.university.service.GroupService;
 
 @Service
+@Transactional
 public class GroupServiceImpl implements GroupService { 
     private GroupDao groupDao;
 
     @Autowired
+    @Qualifier("GroupDaoImpl")
     public void setGroupDao(GroupDao groupDao) {
         this.groupDao = groupDao;
     }

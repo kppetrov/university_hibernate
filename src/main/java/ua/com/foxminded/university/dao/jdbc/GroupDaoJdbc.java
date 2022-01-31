@@ -33,7 +33,7 @@ import ua.com.foxminded.university.exception.DaoException;
 import ua.com.foxminded.university.model.Group;
 import ua.com.foxminded.university.model.Student;
 
-@Repository
+@Repository("GroupDaoJdbc")
 public class GroupDaoJdbc extends AbstractDAO implements GroupDao {
     private static final Logger LOGGER = LoggerFactory.getLogger(GroupDaoJdbc.class);
     private static final String ID_NOT_EXIST = "The group with id=%d does not exist";

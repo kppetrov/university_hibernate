@@ -31,7 +31,7 @@ import ua.com.foxminded.university.dao.jdbc.mappers.LessonMapper;
 import ua.com.foxminded.university.exception.DaoException;
 import ua.com.foxminded.university.model.Lesson;
 
-@Repository
+@Repository("LessonDaoJdbc")
 public class LessonDaoJdbc extends AbstractDAO implements LessonDao {
     private static final Logger LOGGER = LoggerFactory.getLogger(LessonDaoJdbc.class);
     private static final String ID_NOT_EXIST = "The lesson with id=%d does not exist";

@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -45,11 +46,13 @@ public class CourseDaoJdbc extends AbstractDAO implements CourseDao {
     }
 
     @Autowired
+    @Qualifier("LessonDaoJdbc")
     public void setLessonDao(LessonDao lessonDao) {
         this.lessonDao = lessonDao;
     }
 
     @Autowired
+    @Qualifier("GroupDaoJdbc")
     public void setGroupDao(GroupDao groupDao) {
         this.groupDao = groupDao;
     }

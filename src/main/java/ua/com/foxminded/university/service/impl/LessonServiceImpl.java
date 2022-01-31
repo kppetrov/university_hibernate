@@ -6,7 +6,9 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import ua.com.foxminded.university.dao.LessonDao;
 import ua.com.foxminded.university.exception.DaoException;
@@ -15,6 +17,7 @@ import ua.com.foxminded.university.model.Lesson;
 import ua.com.foxminded.university.service.LessonService;
 
 @Service
+@Transactional
 public class LessonServiceImpl implements LessonService {
     private static final Logger LOGGER = LoggerFactory.getLogger(LessonServiceImpl.class);
     private static final String TEACHER_IS_BUSY = "Cannot create lesson. The teacher is busy at this time.";
@@ -25,6 +28,7 @@ public class LessonServiceImpl implements LessonService {
     private LessonDao lessonDao;
 
     @Autowired
+    @Qualifier("LessonDaoImpl")
     public void setLessonDao(LessonDao lessonDao) {
         this.lessonDao = lessonDao;
     }
