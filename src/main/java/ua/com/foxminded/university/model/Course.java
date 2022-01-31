@@ -12,13 +12,19 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.JoinColumn;
 
 @Entity
 @Table(name = "courses")
-public class Course {
+@NamedQuery(name = Course.FIND_COURSE_BY_ID_WITH_GROUPS, 
+            query = "select distinct c from Course c "
+                    + "left join fetch c.groups g " 
+                    + "where c.id = :id")
+public class Course {    
+    public static final String FIND_COURSE_BY_ID_WITH_GROUPS = "Course.findByIdWithGroups";  
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

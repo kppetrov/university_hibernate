@@ -10,11 +10,25 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "lessons")
-public class Lesson {
+@Table(name = "lessons")    
+@NamedQuery(name=Lesson.FIND_LESSONS_BY_DATE_ADN_PERIOD_ID_AND_TEACHER_ID,
+            query="select distinct l from Lesson l " +
+                    "where l.date = :date " + 
+                    "and l.period.id = :periodId " + 
+                    "and l.teacher.id = :teacherId")
+@NamedQuery(name=Lesson.FIND_LESSONS_BY_DATE_ADN_PERIOD_ID_AND_CLASSROOM_ID,
+            query="select distinct l from Lesson l " +
+                    "where l.date = :date " + 
+                    "and l.period.id = :periodId " + 
+                    "and l.classroom.id = :classroomId")
+public class Lesson {    
+
+    public static final String FIND_LESSONS_BY_DATE_ADN_PERIOD_ID_AND_TEACHER_ID = "Lesson.getByDatePeriodIdTeacherId";
+    public static final String FIND_LESSONS_BY_DATE_ADN_PERIOD_ID_AND_CLASSROOM_ID = "Lesson.getByDatePeriodIdClassroomId";
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
