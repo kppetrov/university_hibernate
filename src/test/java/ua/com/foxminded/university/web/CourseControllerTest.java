@@ -175,7 +175,6 @@ class CourseControllerTest {
                 );
                 
         verify(courseService, times(1)).update(course);
-        verify(courseService, times(1)).updateGroups(course);
         verifyNoMoreInteractions(courseService);
     }
     

@@ -34,7 +34,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import ua.com.foxminded.university.config.WebConfig;
 import ua.com.foxminded.university.model.Group;
 import ua.com.foxminded.university.service.GroupService;
-import ua.com.foxminded.university.web.model.CourseModel;
 import ua.com.foxminded.university.web.model.GroupModel;
 
 @ExtendWith(MockitoExtension.class)
@@ -150,7 +149,7 @@ class GroupControllerTest {
         mockMvc.perform(post("/groups/add")
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                         .param("name", GROUP_NAME)
-                .sessionAttr("group", new CourseModel()))
+                .sessionAttr("group", new GroupModel()))
                 .andDo(print())
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/groups"));
