@@ -11,7 +11,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jndi.JndiTemplate;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
@@ -33,12 +32,6 @@ public class DataConfig {
         return (DataSource) new JndiTemplate().lookup(jdbcUrl);
     }
 
-    @Bean
-    public NamedParameterJdbcTemplate jdbcTemplate() throws NamingException {
-        return new NamedParameterJdbcTemplate(dataSource());
-    }
-    
-    
     @Bean
     public PlatformTransactionManager transactionManager() throws NamingException {
         return new JpaTransactionManager(entityManagerFactory());
