@@ -12,9 +12,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "lessons")    
+@Table(name = "lessons", uniqueConstraints = { 
+        @UniqueConstraint(columnNames = { "date", "period_id", "classroom_id" }),
+        @UniqueConstraint(columnNames = { "date", "period_id", "teacher_id" }) 
+        }) 
 @NamedQuery(name=Lesson.FIND_LESSONS_BY_DATE_ADN_PERIOD_ID_AND_TEACHER_ID,
             query="select distinct l from Lesson l " +
                     "where l.date = :date " + 

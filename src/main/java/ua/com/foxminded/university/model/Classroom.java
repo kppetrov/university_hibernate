@@ -22,7 +22,7 @@ public class Classroom {
     
     @NotBlank(message="{validation.name.NotBlank.message}")
     @Size(min=3, max=25, message="{validation.name.Size.message}")
-    @Column(name = "name")
+    @Column(name = "name", unique = true)
     private String name;
 
     public Classroom() {
