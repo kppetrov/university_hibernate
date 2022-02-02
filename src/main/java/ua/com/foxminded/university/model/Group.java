@@ -1,8 +1,8 @@
 package ua.com.foxminded.university.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,50 +16,38 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "groups")
 public class Group {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
 
-    @Column(name = "name")
+    @Column(name = "name", unique = true)
     private String name;
 
     @OneToMany(mappedBy = "group", fetch = FetchType.LAZY)
-    private List<Student> students = new ArrayList<>();
+    private Set<Student> students = new HashSet<>();
 
     public Group() {
-    }   
+    }
 
     public Group(int id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public Group(int id, String name, List<Student> students) {
+    public Group(int id, String name, Set<Student> students) {
         this.id = id;
         this.name = name;
         this.students = students;
     }
-    
+
     public boolean addStudent(Student student) {
-        if (students == null) {
-            students = new ArrayList<>();
-        } else {
-            if (students.contains(student)) {
-                return false;
-            }
-        }
-        students.add(student);
-        return true;
+        return students.add(student);
     }
-    
+
     public boolean removeStudent(Student student) {
-        if (students == null) {
-            return false;
-        } else {
-            return students.remove(student);
-        }
+        return students.remove(student);
     }
 
     public int getId() {
@@ -78,11 +66,11 @@ public class Group {
         this.name = name;
     }
 
-    public List<Student> getStudents() {
+    public Set<Student> getStudents() {
         return students;
     }
 
-    public void setStudents(List<Student> students) {
+    public void setStudents(Set<Student> students) {
         this.students = students;
     }
 
@@ -106,5 +94,5 @@ public class Group {
     @Override
     public String toString() {
         return "Group [id=" + id + ", name=" + name + "]";
-    }    
+    }
 }
