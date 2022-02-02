@@ -3,6 +3,7 @@ package ua.com.foxminded.university.web.model;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Arrays;
+import java.util.HashSet;
 
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
@@ -14,8 +15,9 @@ class CourseModelWithGroupsTest {
     private ModelMapper modelMapper = new ModelMapper();
     private Group group = new Group(1, "group1");
     private GroupModel groupModel = new GroupModel(group.getId(), group.getName());
-    private Course course = new Course(1, "course1", null, Arrays.asList(group));
-    private CourseModelWithGroups courseModel = new CourseModelWithGroups(1, "course1", Arrays.asList(groupModel));
+    private Course course = new Course(1, "course1", null, new HashSet<>(Arrays.asList(group)));
+    private CourseModelWithGroups courseModel = new CourseModelWithGroups(1, "course1",
+            new HashSet<>(Arrays.asList(groupModel)));
 
     @Test
     void whenConvertCourseEntityToCourseModelThenCorrect() {

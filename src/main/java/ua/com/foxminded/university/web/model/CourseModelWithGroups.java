@@ -1,7 +1,8 @@
 package ua.com.foxminded.university.web.model;
 
-import java.util.List;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -11,13 +12,13 @@ public class CourseModelWithGroups {
     @NotBlank(message="{validation.name.NotBlank.message}")
     @Size(min=3, max=25, message="{validation.name.Size.message}")
     private String name;
-    private List<GroupModel> groups;    
+    private Set<GroupModel> groups = new HashSet<>();    
     
     public CourseModelWithGroups() {
         
     }
     
-    public CourseModelWithGroups(int id, String name, List<GroupModel> groups) {
+    public CourseModelWithGroups(int id, String name, Set<GroupModel> groups) {
         this.id = id;
         this.name = name;
         this.groups = groups;
@@ -39,11 +40,11 @@ public class CourseModelWithGroups {
         this.name = name;
     }
 
-    public List<GroupModel> getGroups() {
+    public Set<GroupModel> getGroups() {
         return groups;
     }
 
-    public void setGroups(List<GroupModel> groups) {
+    public void setGroups(Set<GroupModel> groups) {
         this.groups = groups;
     }
 
