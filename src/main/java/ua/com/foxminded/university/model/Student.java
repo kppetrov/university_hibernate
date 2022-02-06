@@ -8,28 +8,23 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@NoArgsConstructor
 @Entity
 @Table(name = "students")
 public class Student extends AbstractPerson {
     
+    @Getter
+    @Setter
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "group_id")
     private Group group;
 
-    public Student() {
-        super();
-    }
-
     public Student(int id, String firstName, String lastName, Gender gender, LocalDate birthdate, Group group) {
         super(id, firstName, lastName, gender, birthdate);
-        this.group = group;
-    }
-
-    public Group getGroup() {
-        return group;
-    }
-
-    public void setGroup(Group group) {
         this.group = group;
     }
 
@@ -40,20 +35,12 @@ public class Student extends AbstractPerson {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        } else if (!super.equals(obj)) {
-            return false;
-        } else if (getClass() != obj.getClass()) {
-            return false;
-        } else {
-            return true;
-        }
+        return super.equals(obj);
     }
 
     @Override
     public String toString() {
         return "Student [id=" + getId() + ", firstName=" + getFirstName() + ", lastName=" + getLastName() + ", gender="
-                + getGender() + ", birthdate=" + getBirthdate() + ",group=" + group + "]";
+                + getGender() + ", birthdate=" + getBirthdate() + ",group=" + group.getName() + "]";
     }
 }

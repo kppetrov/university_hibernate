@@ -5,13 +5,12 @@ import java.time.LocalDate;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
 @Entity
 @Table(name = "teachers")
 public class Teacher extends AbstractPerson {
-
-    public Teacher() {
-        super();
-    }
 
     public Teacher(int id, String firstName, String lastName, Gender gender, LocalDate birthdate) {
         super(id, firstName, lastName, gender, birthdate);
@@ -24,15 +23,7 @@ public class Teacher extends AbstractPerson {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        } else if (!super.equals(obj)) {
-            return false;
-        } else if (getClass() != obj.getClass()) {
-            return false;
-        } else {
-            return true;
-        }
+        return super.equals(obj);
     }
 
     @Override

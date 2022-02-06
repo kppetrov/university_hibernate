@@ -15,7 +15,7 @@ class CourseModelWithGroupsTest {
     private ModelMapper modelMapper = new ModelMapper();
     private Group group = new Group(1, "group1");
     private GroupModel groupModel = new GroupModel(group.getId(), group.getName());
-    private Course course = new Course(1, "course1", null, new HashSet<>(Arrays.asList(group)));
+    private Course course = new Course(1, "course1", new HashSet<>(), new HashSet<>(Arrays.asList(group)));
     private CourseModelWithGroups courseModel = new CourseModelWithGroups(1, "course1",
             new HashSet<>(Arrays.asList(groupModel)));
 
