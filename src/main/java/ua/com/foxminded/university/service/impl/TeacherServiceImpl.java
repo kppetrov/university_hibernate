@@ -3,7 +3,6 @@ package ua.com.foxminded.university.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,7 +18,6 @@ public class TeacherServiceImpl implements TeacherService {
     private TeacherDao teacherDao;
 
     @Autowired
-    @Qualifier("TeacherDaoImpl")
     public void setTeacherDao(TeacherDao teacherDao) {
         try {
             this.teacherDao = teacherDao;

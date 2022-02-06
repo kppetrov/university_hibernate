@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import ua.com.foxminded.university.dao.GroupDao;
 import ua.com.foxminded.university.model.Group;
 
-@Repository("GroupDaoImpl")
+@Repository
 public class GroupDaoImpl extends GenericDaoImpl<Group> implements GroupDao {
 
     public GroupDaoImpl() {

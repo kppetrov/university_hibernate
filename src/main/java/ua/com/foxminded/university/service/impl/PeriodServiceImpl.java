@@ -6,7 +6,6 @@ import ua.com.foxminded.university.service.PeriodService;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,7 +19,6 @@ public class PeriodServiceImpl implements PeriodService {
     private PeriodDao periodDao;
 
     @Autowired
-    @Qualifier("PeriodDaoImpl")
     public void setPeriodDao(PeriodDao periodDao) {
         this.periodDao = periodDao;
     }

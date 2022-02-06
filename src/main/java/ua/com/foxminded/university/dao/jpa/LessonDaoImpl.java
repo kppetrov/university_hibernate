@@ -11,7 +11,7 @@ import ua.com.foxminded.university.dao.LessonDao;
 import ua.com.foxminded.university.exception.DaoException;
 import ua.com.foxminded.university.model.Lesson;
 
-@Repository("LessonDaoImpl")
+@Repository
 public class LessonDaoImpl extends GenericDaoImpl<Lesson> implements LessonDao {
 
     public LessonDaoImpl() {

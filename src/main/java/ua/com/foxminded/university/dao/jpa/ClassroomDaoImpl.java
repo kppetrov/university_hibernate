@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import ua.com.foxminded.university.dao.ClassroomDao;
 import ua.com.foxminded.university.model.Classroom;
 
-@Repository("ClassroomDaoImpl")
+@Repository
 public class ClassroomDaoImpl extends GenericDaoImpl<Classroom> implements ClassroomDao {
     
     public ClassroomDaoImpl() {
