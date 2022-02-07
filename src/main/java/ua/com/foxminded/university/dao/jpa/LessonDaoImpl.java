@@ -2,6 +2,7 @@ package ua.com.foxminded.university.dao.jpa;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.NoResultException;
 
@@ -34,17 +35,18 @@ public class LessonDaoImpl extends GenericDaoImpl<Lesson> implements LessonDao {
     }
 
     @Override
-    public Lesson getByDatePeriodIdTeacherId(LocalDate date, int periodId, int teacherId) {
+    public Optional<Lesson> getByDatePeriodIdTeacherId(LocalDate date, int periodId, int teacherId) {
         try {
-            return  getEntityManager()
+            Lesson lesson =  getEntityManager()
                     .createNamedQuery(Lesson.FIND_LESSONS_BY_DATE_ADN_PERIOD_ID_AND_TEACHER_ID, Lesson.class)
                     .setParameter("date", date)
                     .setParameter("periodId", periodId)
                     .setParameter("teacherId", teacherId)
                     .setMaxResults(1)
                     .getSingleResult();
+            return Optional.of(lesson);
         } catch (NoResultException e) {
-            return new Lesson();
+            return Optional.empty();
         } catch (Exception e) {
             String msg = String.format(
                     "Cannot get lesson by date, periodId, teacherId. Date=%s; periodId=%d; teacherId=%d", date,
@@ -54,17 +56,18 @@ public class LessonDaoImpl extends GenericDaoImpl<Lesson> implements LessonDao {
     }
 
     @Override
-    public Lesson getByDatePeriodIdClassroomId(LocalDate date, int periodId, int classroomId) {
+    public Optional<Lesson> getByDatePeriodIdClassroomId(LocalDate date, int periodId, int classroomId) {
         try {
-            return  getEntityManager()
+            Lesson lesson = getEntityManager()
                     .createNamedQuery(Lesson.FIND_LESSONS_BY_DATE_ADN_PERIOD_ID_AND_CLASSROOM_ID, Lesson.class)
                     .setParameter("date", date)
                     .setParameter("periodId", periodId)
                     .setParameter("classroomId", classroomId)
                     .setMaxResults(1)
                     .getSingleResult();
+            return Optional.of(lesson);
         } catch (NoResultException e) {
-            return new Lesson();
+            return Optional.empty();
         } catch (Exception e) {
             String msg = String.format(
                     "Cannot get lesson by date, periodId, classroomId. Date=%s; periodId=%d; classroomId=%d", date,

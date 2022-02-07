@@ -2,6 +2,7 @@ package ua.com.foxminded.university.service.impl;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -85,8 +86,11 @@ public class LessonServiceImpl implements LessonService {
     private boolean teacherIsBusy(LocalDate date, int periodId, int teacherId, int exceptLessonId) {
         LOGGER.debug("Check if teacher is busy");
         try {
-            Lesson lesson = lessonDao.getByDatePeriodIdTeacherId(date, periodId, teacherId);
-            return lesson.getId() > 0 && lesson.getId() != exceptLessonId;
+            Optional<Lesson> optionalLesson = lessonDao.getByDatePeriodIdTeacherId(date, periodId, teacherId);
+            if (optionalLesson.isPresent()) {
+                return optionalLesson.get().getId() != exceptLessonId;
+            }
+            return false;
         } catch (DaoException e) {
             throw new ServiceException(e.getMessage(), e);
         }
@@ -95,8 +99,11 @@ public class LessonServiceImpl implements LessonService {
     private boolean classroomIsOccupied(LocalDate date, int periodId, int classroomId, int exceptLessonId) {
         LOGGER.debug("Check if classroom is occupied");
         try {
-            Lesson lesson = lessonDao.getByDatePeriodIdClassroomId(date, periodId, classroomId);
-            return lesson.getId() > 0 && lesson.getId() != exceptLessonId;
+            Optional<Lesson> optionalLesson = lessonDao.getByDatePeriodIdClassroomId(date, periodId, classroomId);
+            if (optionalLesson.isPresent()) {
+                return optionalLesson.get().getId() != exceptLessonId;
+            }
+            return false;
         } catch (DaoException e) {
             throw new ServiceException(e.getMessage(), e);
         }
