@@ -17,6 +17,7 @@ import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
@@ -42,10 +43,13 @@ public class Course {
     @Column(name = "name")
     private String name;
     
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
     private Set<Lesson> lessons = new HashSet<>();
     
     @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "course_group",
             joinColumns = @JoinColumn(name = "course_id"),
@@ -58,6 +62,10 @@ public class Course {
 
     public boolean removeGroup(Group group) {
         return groups.remove(group);
+    }
+    
+    public boolean addLesson(Lesson lesson) {
+        return lessons.add(lesson);        
     }
 
     public Course(int id, String name) {
