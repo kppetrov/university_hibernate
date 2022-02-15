@@ -50,11 +50,7 @@ class StudentDaoImplTest {
     @Sql(value = { "/insert-data.sql" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
     void testGetById() {
         Student actual1 = dao.getById(student1.getId());
-        Student actual2 = dao.getById(student2.getId());
-        assertAll(
-                () -> assertEquals(student1, actual1), 
-                () -> assertEquals(student2, actual2)
-                );
+        assertEquals(student1, actual1);
     }
     
     @Test

@@ -43,11 +43,7 @@ class GroupDaoImplTest {
     @Sql(value = { "/insert-data.sql" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
     void testGetById() {
         Group actual1 = dao.getById(group1.getId());
-        Group actual2 = dao.getById(group2.getId());
-        assertAll(
-                () -> assertEquals(group1, actual1), 
-                () -> assertEquals(group2, actual2)
-                );
+         assertEquals(group1, actual1);
     }    
     
     @Test

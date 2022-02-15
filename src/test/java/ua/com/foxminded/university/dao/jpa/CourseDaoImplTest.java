@@ -41,17 +41,12 @@ class CourseDaoImplTest {
     private Course course2 = new Course(2, "course2");
     private Course course3 = new Course(3, "course3");
     private Group group1 = new Group(1, "group1");
-    private Group group2 = new Group(2, "group2");
     private Teacher teacher1 = new Teacher(1, "first_name1", "last_name1", Gender.MAIL, LocalDate.of(1971, 01, 01));
-    private Teacher teacher2 = new Teacher(2, "first_name2", "last_name2", Gender.FEMAIL, LocalDate.of(1972, 02, 02));
     private Period period1 = new Period(1, "period1", LocalTime.of(8, 0), LocalTime.of(9, 30));
     private Period period2 = new Period(2, "period2", LocalTime.of(9, 50), LocalTime.of(11, 20));
     private Classroom classroom1 = new Classroom(1, "classroom1");
-    private Classroom classroom2 = new Classroom(2, "classroom2");
     private Lesson lesson1 = new Lesson(1, course1, LocalDate.of(2021, 01, 01), period1, teacher1, classroom1);
     private Lesson lesson2 = new Lesson(2, course1, LocalDate.of(2021, 01, 01), period2, teacher1, classroom1);
-    private Lesson lesson3 = new Lesson(3, course2, LocalDate.of(2021, 01, 01), period1, teacher2, classroom2);
-    private Lesson lesson4 = new Lesson(4, course2, LocalDate.of(2021, 01, 01), period2, teacher2, classroom2);
 
     @Test
     @Sql(value = { "/insert-data.sql" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
@@ -68,11 +63,7 @@ class CourseDaoImplTest {
     @Sql(value = { "/insert-data.sql" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
     void testGetById() {
         Course actual1 = dao.getById(course1.getId());
-        Course actual2 = dao.getById(course2.getId());
-        assertAll(
-                () -> assertEquals(course1, actual1), 
-                () -> assertEquals(course2, actual2)
-                );
+        assertEquals(course1, actual1);
     }
     
     @Test
@@ -116,25 +107,16 @@ class CourseDaoImplTest {
     @Sql(value = { "/insert-data.sql" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
     void testGetByIdWithDetail() {       
         course1.getGroups().clear();
-        course1.addGroup(group1);        
-        course2.getGroups().clear();
-        course2.addGroup(group2);        
+        course1.addGroup(group1);     
         course1.getLessons().clear();
         course1.addLesson(lesson1);
-        course1.addLesson(lesson2);    
-        course2.getLessons().clear();
-        course2.addLesson(lesson3);
-        course2.addLesson(lesson4);        
+        course1.addLesson(lesson2); 
 
         Course actual1 = dao.getByIdWithDetail(course1.getId());
-        Course actual2 = dao.getByIdWithDetail(course2.getId());
         assertAll(
                 () -> assertEquals(course1, actual1), 
                 () -> assertEquals(course1.getGroups(), actual1.getGroups()),
-                () -> assertEquals(course1.getLessons(), actual1.getLessons()),
-                () -> assertEquals(course2, actual2), 
-                () -> assertEquals(course2.getGroups(), actual2.getGroups()),
-                () -> assertEquals(course2.getLessons(), actual2.getLessons())
+                () -> assertEquals(course1.getLessons(), actual1.getLessons())
                 );
     }
 }

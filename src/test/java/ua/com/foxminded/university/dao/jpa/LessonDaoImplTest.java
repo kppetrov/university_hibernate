@@ -61,15 +61,7 @@ class LessonDaoImplTest {
     @Sql(value = { "/insert-data.sql" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
     void testGetById() {
         Lesson actual1 = dao.getById(lesson1.getId());
-        Lesson actual2 = dao.getById(lesson2.getId());
-        Lesson actual3 = dao.getById(lesson3.getId());
-        Lesson actual4 = dao.getById(lesson4.getId());
-        assertAll(
-                () -> assertEquals(lesson1, actual1), 
-                () -> assertEquals(lesson2, actual2),
-                () -> assertEquals(lesson3, actual3),
-                () -> assertEquals(lesson4, actual4)
-                );
+         assertEquals(lesson1, actual1);
     }
     
     @Test
@@ -117,29 +109,13 @@ class LessonDaoImplTest {
     @Sql(value = { "/insert-data.sql" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
     void testGetByDatePeriodIdTeacherId() {
         Optional<Lesson> actual1 = dao.getByDatePeriodIdTeacherId(LocalDate.of(2021, 01, 01), period1.getId(), teacher1.getId());
-        Optional<Lesson> actual2 = dao.getByDatePeriodIdTeacherId(LocalDate.of(2021, 01, 01), period2.getId(), teacher1.getId());
-        Optional<Lesson> actual3 = dao.getByDatePeriodIdTeacherId(LocalDate.of(2021, 01, 01), period1.getId(), teacher2.getId());
-        Optional<Lesson> actual4 = dao.getByDatePeriodIdTeacherId(LocalDate.of(2021, 01, 01), period2.getId(), teacher2.getId());
-        assertAll(
-                () -> assertEquals(lesson1, actual1.get()), 
-                () -> assertEquals(lesson2, actual2.get()),
-                () -> assertEquals(lesson3, actual3.get()),
-                () -> assertEquals(lesson4, actual4.get())
-                );
+        assertEquals(lesson1, actual1.get());
     } 
     
     @Test
     @Sql(value = { "/insert-data.sql" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
     void testGetByDatePeriodIdClassroomId() {
         Optional<Lesson> actual1 = dao.getByDatePeriodIdClassroomId(LocalDate.of(2021, 01, 01), period1.getId(), classroom1.getId());
-        Optional<Lesson> actual2 = dao.getByDatePeriodIdClassroomId(LocalDate.of(2021, 01, 01), period2.getId(), classroom1.getId());
-        Optional<Lesson> actual3 = dao.getByDatePeriodIdClassroomId(LocalDate.of(2021, 01, 01), period1.getId(), classroom2.getId());
-        Optional<Lesson> actual4 = dao.getByDatePeriodIdClassroomId(LocalDate.of(2021, 01, 01), period2.getId(), classroom2.getId());
-        assertAll(
-                () -> assertEquals(lesson1, actual1.get()), 
-                () -> assertEquals(lesson2, actual2.get()),
-                () -> assertEquals(lesson3, actual3.get()),
-                () -> assertEquals(lesson4, actual4.get())
-                );
+        assertEquals(lesson1, actual1.get());
     }
 }

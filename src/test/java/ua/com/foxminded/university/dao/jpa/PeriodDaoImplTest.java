@@ -44,11 +44,7 @@ class PeriodDaoImplTest {
     @Sql(value = { "/insert-data.sql" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
     void testGetById() {
         Period actual1 = dao.getById(period1.getId());
-        Period actual2 = dao.getById(period2.getId());
-        assertAll(
-                () -> assertEquals(period1, actual1), 
-                () -> assertEquals(period2, actual2)
-                );
+        assertEquals(period1, actual1);
     }
     
     @Test
