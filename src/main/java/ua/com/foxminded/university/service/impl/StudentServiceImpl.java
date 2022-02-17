@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import ua.com.foxminded.university.dao.StudentDao;
 import ua.com.foxminded.university.exception.DaoException;
@@ -12,6 +13,7 @@ import ua.com.foxminded.university.model.Student;
 import ua.com.foxminded.university.service.StudentService;
 
 @Service
+@Transactional
 public class StudentServiceImpl implements StudentService {
     private StudentDao studentDao;   
     
@@ -52,18 +54,18 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public int update(Student item) {
+    public void update(Student item) {
         try {
-            return studentDao.update(item);
+            studentDao.update(item);
         } catch (DaoException e) {
             throw new ServiceException(e.getMessage(), e);
         }
     }
 
     @Override
-    public int delete(int id) {
+    public void delete(int id) {
         try {
-            return studentDao.delete(id);
+            studentDao.delete(id);
         } catch (DaoException e) {
             throw new ServiceException(e.getMessage(), e);
         }

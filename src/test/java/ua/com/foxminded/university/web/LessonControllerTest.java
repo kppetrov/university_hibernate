@@ -46,7 +46,6 @@ import ua.com.foxminded.university.service.PeriodService;
 import ua.com.foxminded.university.service.TeacherService;
 import ua.com.foxminded.university.web.model.ClassroomModel;
 import ua.com.foxminded.university.web.model.CourseModel;
-import ua.com.foxminded.university.web.model.GroupModel;
 import ua.com.foxminded.university.web.model.LessonDetailModel;
 import ua.com.foxminded.university.web.model.LessonEditModel;
 import ua.com.foxminded.university.web.model.LessonListModel;
@@ -194,7 +193,6 @@ class LessonControllerTest {
     @Test
     void testEdit() throws Exception {    
         when(modelMapper.map(lessonEditModel, Lesson.class)).thenReturn(lesson);   
-        when(lessonService.update(lesson)).thenReturn(1);
         mockMvc.perform(post("/lessons/update")
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                         .param("id", "1")
@@ -203,7 +201,7 @@ class LessonControllerTest {
                         .param("periodId", "1")
                         .param("classroomId", "1")
                         .param("teacherId", "1")
-                .sessionAttr("group", new GroupModel()))
+                .sessionAttr("lesson", new LessonEditModel()))
                 .andDo(print())
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/lessons/1"));
@@ -238,7 +236,7 @@ class LessonControllerTest {
                         .param("periodId", "1")
                         .param("classroomId", "1")
                         .param("teacherId", "1")
-                .sessionAttr("group", new GroupModel()))
+                .sessionAttr("lesson", new LessonEditModel()))
                 .andDo(print())
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/lessons"));

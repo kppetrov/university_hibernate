@@ -87,7 +87,6 @@ public class CourseController {
         }
         Course course = modelMapper.map(courseModel, Course.class);
         courseService.update(course);
-        courseService.updateGroups(course);
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Course has been updated: {}", course);
         }

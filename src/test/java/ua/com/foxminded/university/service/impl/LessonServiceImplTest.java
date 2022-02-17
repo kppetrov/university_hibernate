@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -65,9 +66,9 @@ class LessonServiceImplTest {
     @Test
     void testInsert() {
         when(lessonDao.getByDatePeriodIdClassroomId(lesson.getDate(), lesson.getPeriod().getId(),
-                lesson.getClassroom().getId())).thenReturn(new Lesson());
+                lesson.getClassroom().getId())).thenReturn(Optional.empty());
         when(lessonDao.getByDatePeriodIdTeacherId(lesson.getDate(), lesson.getPeriod().getId(),
-                lesson.getTeacher().getId())).thenReturn(new Lesson());
+                lesson.getTeacher().getId())).thenReturn(Optional.empty());
         service.insert(lesson);
         verify(lessonDao, times(1)).insert(lesson);
     }
@@ -75,7 +76,7 @@ class LessonServiceImplTest {
     @Test
     void insertTeacherIsBusyThrowException() {
         when(lessonDao.getByDatePeriodIdTeacherId(lesson.getDate(), lesson.getPeriod().getId(),
-                lesson.getTeacher().getId())).thenReturn(alreadyExistsLesson);
+                lesson.getTeacher().getId())).thenReturn(Optional.of(alreadyExistsLesson));
         ServiceException exception = assertThrows(ServiceException.class, () -> service.insert(lesson));
         assertEquals(TEACHER_IS_BUSY, exception.getMessage());
     }
@@ -83,9 +84,9 @@ class LessonServiceImplTest {
     @Test
     void insertClassroomIsOccupiedThrowException() {
         when(lessonDao.getByDatePeriodIdTeacherId(lesson.getDate(), lesson.getPeriod().getId(),
-                lesson.getTeacher().getId())).thenReturn(new Lesson());
+                lesson.getTeacher().getId())).thenReturn(Optional.empty());
         when(lessonDao.getByDatePeriodIdClassroomId(lesson.getDate(), lesson.getPeriod().getId(),
-                lesson.getClassroom().getId())).thenReturn(alreadyExistsLesson);
+                lesson.getClassroom().getId())).thenReturn(Optional.of(alreadyExistsLesson));
         ServiceException exception = assertThrows(ServiceException.class, () -> service.insert(lesson));
         assertEquals(CLASSROOM_IS_OCCUPIED, exception.getMessage());
     }
@@ -93,9 +94,9 @@ class LessonServiceImplTest {
     @Test
     void testUpdate() {
         when(lessonDao.getByDatePeriodIdClassroomId(lesson.getDate(), lesson.getPeriod().getId(),
-                lesson.getClassroom().getId())).thenReturn(lesson);
+                lesson.getClassroom().getId())).thenReturn(Optional.of(lesson));
         when(lessonDao.getByDatePeriodIdTeacherId(lesson.getDate(), lesson.getPeriod().getId(),
-                lesson.getTeacher().getId())).thenReturn(lesson);
+                lesson.getTeacher().getId())).thenReturn(Optional.of(lesson));
         service.update(lesson);
         verify(lessonDao, times(1)).update(lesson);
     }
@@ -103,7 +104,7 @@ class LessonServiceImplTest {
     @Test
     void updateTeacherIsBusyThrowException() {
         when(lessonDao.getByDatePeriodIdTeacherId(lesson.getDate(), lesson.getPeriod().getId(),
-                lesson.getTeacher().getId())).thenReturn(alreadyExistsLesson);
+                lesson.getTeacher().getId())).thenReturn(Optional.of(alreadyExistsLesson));
         ServiceException exception = assertThrows(ServiceException.class, () -> service.update(lesson));
         assertEquals(TEACHER_IS_BUSY_UPDATE, exception.getMessage());
     }
@@ -111,9 +112,9 @@ class LessonServiceImplTest {
     @Test
     void updateClassroomIsOccupiedThrowException() {
         when(lessonDao.getByDatePeriodIdTeacherId(lesson.getDate(), lesson.getPeriod().getId(),
-                lesson.getTeacher().getId())).thenReturn(new Lesson());
+                lesson.getTeacher().getId())).thenReturn(Optional.empty());
         when(lessonDao.getByDatePeriodIdClassroomId(lesson.getDate(), lesson.getPeriod().getId(),
-                lesson.getClassroom().getId())).thenReturn(alreadyExistsLesson);
+                lesson.getClassroom().getId())).thenReturn(Optional.of(alreadyExistsLesson));
         ServiceException exception = assertThrows(ServiceException.class, () -> service.update(lesson));
         assertEquals(CLASSROOM_IS_OCCUPIED_UPDATE, exception.getMessage());
     }

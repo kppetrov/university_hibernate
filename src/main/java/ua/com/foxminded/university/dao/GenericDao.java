@@ -6,6 +6,6 @@ public interface GenericDao<T> {
     List<T> getAll();
     T getById(int id);
     T insert(T item);
-    int update(T item);
-    int delete(int id);
+    void update(T item);
+    void delete(int id);
 }

@@ -143,7 +143,6 @@ class StudentControllerTest {
         StudentModel editStudentModel = new StudentModel(1, STUDENT_FIRST_NAME, STUDENT_LAST_NAME, Gender.MAIL,
                 BIRTHDATE, 1, null);        
         when(modelMapper.map(editStudentModel, Student.class)).thenReturn(editStudent);   
-        when(studentService.update(editStudent)).thenReturn(1);
         mockMvc.perform(post("/students/update")
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                         .param("id", "1")

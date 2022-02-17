@@ -1,9 +1,11 @@
 package ua.com.foxminded.university.web;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import ua.com.foxminded.university.model.Classroom;
 import ua.com.foxminded.university.service.ClassroomService;
+import ua.com.foxminded.university.web.model.ClassroomModel;
 
 @RequestMapping("/classrooms")
 @Controller
@@ -25,11 +28,15 @@ public class ClassroomController {
     private static final Logger LOGGER = LoggerFactory.getLogger(ClassroomController.class);
     
     private ClassroomService classroomService;
+    private ModelMapper modelMapper;
     
     @GetMapping
     public String list(Model model) {
         LOGGER.debug("Listing classrooms");
-        List<Classroom> classrooms = classroomService.getAll();
+        List<ClassroomModel> classrooms = classroomService.getAll()
+                .stream()
+                .map(classroom -> modelMapper.map(classroom, ClassroomModel.class))
+                .collect(Collectors.toList());
         model.addAttribute("classrooms", classrooms);
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("No. of classrooms: {}", classrooms.size());
@@ -42,7 +49,7 @@ public class ClassroomController {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Showing classroom. id = {}", id);
         }
-        Classroom classroom = classroomService.getById(id);
+        ClassroomModel classroom = modelMapper.map(classroomService.getById(id), ClassroomModel.class);
         model.addAttribute("classroom", classroom);
         return "classrooms/show";
     }  
@@ -52,7 +59,7 @@ public class ClassroomController {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Editing classroom. id = {}", id);
         }
-        Classroom classroom = classroomService.getById(id);
+        ClassroomModel classroom = modelMapper.map(classroomService.getById(id), ClassroomModel.class);
         model.addAttribute("classroom", classroom);
         return "classrooms/form";
     }
@@ -62,16 +69,17 @@ public class ClassroomController {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Createing classroom");
         }
-        Classroom classroom = new Classroom();
+        ClassroomModel classroom = new ClassroomModel();
         model.addAttribute("classroom", classroom);
         return "classrooms/form";
     }
     
     @PostMapping(value = "/update")
-    public String edit(@ModelAttribute("classroom") @Valid Classroom classroom, BindingResult bindingResult) {
+    public String edit(@ModelAttribute("classroom") @Valid ClassroomModel classroomModel, BindingResult bindingResult) {
         if(bindingResult.hasErrors()) {
             return "classrooms/form";
         }
+        Classroom classroom = modelMapper.map(classroomModel, Classroom.class);
         classroomService.update(classroom);
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Classroom has been updated: {}", classroom);
@@ -80,11 +88,11 @@ public class ClassroomController {
     }
     
     @PostMapping(value = "/add")
-    public String create(@ModelAttribute("classroom") @Valid Classroom classroom, BindingResult bindingResult) {
+    public String create(@ModelAttribute("classroom") @Valid ClassroomModel classroomModel, BindingResult bindingResult) {
         if(bindingResult.hasErrors()) {
             return "classrooms/form";
         }
-        Classroom newClassroom = classroomService.insert(classroom);
+        Classroom newClassroom = classroomService.insert(modelMapper.map(classroomModel, Classroom.class));
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Classroom has been created: {}", newClassroom);
         }
@@ -98,8 +106,13 @@ public class ClassroomController {
             LOGGER.debug("Classroom has been deleted. id = {}", id);
         }
         return "redirect:/classrooms";
-    }
+    }    
     
+    @Autowired
+    public void setModelMapper(ModelMapper modelMapper) {
+        this.modelMapper = modelMapper;
+    }
+
     @Autowired
     public void setClassroomService(ClassroomService classroomService) {
         this.classroomService = classroomService;

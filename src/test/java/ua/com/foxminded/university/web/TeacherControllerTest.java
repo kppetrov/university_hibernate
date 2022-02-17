@@ -121,7 +121,6 @@ class TeacherControllerTest {
     @Test
     void testEdit() throws Exception {      
         when(modelMapper.map(teacherModel, Teacher.class)).thenReturn(teacher);   
-        when(teacherService.update(teacher)).thenReturn(1);
         mockMvc.perform(post("/teachers/update")
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                         .param("id", "1")

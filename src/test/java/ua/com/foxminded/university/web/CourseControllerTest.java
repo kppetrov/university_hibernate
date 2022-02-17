@@ -2,7 +2,6 @@ package ua.com.foxminded.university.web;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -16,7 +15,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -70,8 +71,9 @@ class CourseControllerTest {
     private GroupModel groupModel = new GroupModel(1, GROUP_NAME);
     private Group group2 = new Group(2, GROUP_NAME2);
     private GroupModel groupModel2 = new GroupModel(2, GROUP_NAME);
-    private Course course = new Course(1, COURSE_NAME, null, Arrays.asList(group, group2));
-    private CourseModelWithGroups courseModelWithGroups = new CourseModelWithGroups(1, COURSE_NAME, Arrays.asList(groupModel, groupModel2));
+    private Course course = new Course(1, COURSE_NAME, null, new HashSet<>(Arrays.asList(group, group2)));
+    private CourseModelWithGroups courseModelWithGroups = new CourseModelWithGroups(1, COURSE_NAME,
+            new HashSet<>(Arrays.asList(groupModel, groupModel2)));
     private CourseModel courseModel = new CourseModel(1, COURSE_NAME); 
 
     @BeforeEach
@@ -145,7 +147,7 @@ class CourseControllerTest {
     @Test
     void testEdit() throws Exception {
         
-        List<GroupModel> expectedGroups = Arrays.asList(new GroupModel(1, null), new GroupModel(2, null));
+        Set<GroupModel> expectedGroups = new HashSet<>(Arrays.asList(new GroupModel(1, null), new GroupModel(2, null)));
         CourseModelWithGroups courseModel = new CourseModelWithGroups(1, COURSE_NAME, expectedGroups);
       
         when(modelMapper.map(courseModel, Course.class)).thenReturn(course);
@@ -154,7 +156,6 @@ class CourseControllerTest {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.addAll("groups", values);
         
-        when(courseService.update(isA(Course.class))).thenReturn(1);
         mockMvc.perform(post("/courses/update")
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                         .param("id", "1")
@@ -177,7 +178,6 @@ class CourseControllerTest {
                 );
                 
         verify(courseService, times(1)).update(course);
-        verify(courseService, times(1)).updateGroups(course);
         verifyNoMoreInteractions(courseService);
     }
     

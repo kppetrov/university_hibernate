@@ -1,4 +1,4 @@
-package ua.com.foxminded.university.dao.jdbc;
+package ua.com.foxminded.university.dao.jpa;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
+import org.springframework.transaction.annotation.Transactional;
 
 import ua.com.foxminded.university.DataConfigForTesting;
 import ua.com.foxminded.university.exception.DaoException;
@@ -19,14 +20,15 @@ import ua.com.foxminded.university.model.Group;
 import ua.com.foxminded.university.model.Student;
 
 @SpringJUnitConfig(classes = DataConfigForTesting.class)
-class StudentDaoJdbcTest {
-    private static final String ID_NOT_EXIST = "The student with id=%d does not exist";
-    
+@Transactional
+class StudentDaoImplTest {
+    private static final String ID_NOT_EXIST = "The %s with id=%d does not exist";
+
     @Autowired
-    private StudentDaoJdbc dao;
+    private StudentDaoImpl dao;
     
-    private Group group1 = new Group(1, "group1", new ArrayList<>());
-    private Group group2 = new Group(2, "group2", new ArrayList<>());
+    private Group group1 = new Group(1, "group1");
+    private Group group2 = new Group(2, "group2");
     private Student student1 = new Student(1, "first_name1", "last_name1", Gender.MAIL, LocalDate.of(2001, 01, 01), group1);
     private Student student2 = new Student(2, "first_name2", "last_name2", Gender.FEMAIL, LocalDate.of(2002, 02, 02), group1);
     private Student student3 = new Student(3, "first_name3", "last_name3", Gender.FEMAIL, LocalDate.of(2003, 03, 03), group2);
@@ -34,7 +36,6 @@ class StudentDaoJdbcTest {
 
     @Test
     @Sql(value = { "/insert-data.sql" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-    @Sql(value = { "/remove-data.sql" }, executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
     void testGetAll() {
         List<Student> expected = new ArrayList<>();
         expected.add(student1);
@@ -47,29 +48,22 @@ class StudentDaoJdbcTest {
 
     @Test
     @Sql(value = { "/insert-data.sql" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-    @Sql(value = { "/remove-data.sql" }, executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
     void testGetById() {
         Student actual1 = dao.getById(student1.getId());
-        Student actual2 = dao.getById(student2.getId());
-        assertAll(
-                () -> assertEquals(student1, actual1), 
-                () -> assertEquals(student2, actual2)
-                );
+        assertEquals(student1, actual1);
     }
     
     @Test
     @Sql(value = { "/insert-data.sql" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-    @Sql(value = { "/remove-data.sql" }, executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
     void shouldThrowExceptionWhenStudentWithSuchIdNotExist() {
         int id = 10;
-        String msg = String.format(ID_NOT_EXIST, id);        
+        String msg = String.format(ID_NOT_EXIST, Student.class, id);        
         DaoException exception = assertThrows(DaoException.class, () -> dao.getById(id));
         assertEquals(msg, exception.getMessage());
     }
 
     @Test
     @Sql(value = { "/insert-data.sql" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-    @Sql(value = { "/remove-data.sql" }, executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
     void testInsert() {
         Student student = new Student();
         student.setFirstName("first_name");
@@ -87,13 +81,11 @@ class StudentDaoJdbcTest {
 
     @Test
     @Sql(value = { "/insert-data.sql" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-    @Sql(value = { "/remove-data.sql" }, executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
     void testUpdate() {
         Student student = new Student(1, "new first_name", "new last_name", Gender.MAIL, LocalDate.of(1980, 01, 01), group2);
-        int countUpdate = dao.update(student);
+        dao.update(student);
         Student actual = dao.getById(student.getId());
         assertAll(
-                () -> assertEquals(1, countUpdate), 
                 () -> assertEquals(student, actual),
                 () -> assertEquals(student.getGroup(), actual.getGroup())
                 );
@@ -101,15 +93,11 @@ class StudentDaoJdbcTest {
 
     @Test
     @Sql(value = { "/insert-data.sql" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
-    @Sql(value = { "/remove-data.sql" }, executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
     void testDelete() {
         int id = 1;
-        String msg = String.format(ID_NOT_EXIST, id);
-        int countDelete = dao.delete(id);        
+        String msg = String.format(ID_NOT_EXIST, Student.class, id);
+        dao.delete(id);        
         DaoException exception = assertThrows(DaoException.class, () -> dao.getById(id));
-        assertAll(
-                () -> assertEquals(1, countDelete), 
-                () -> assertEquals(msg, exception.getMessage())
-                );
+        assertEquals(msg, exception.getMessage());
     }
 }

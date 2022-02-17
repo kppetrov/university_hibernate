@@ -7,22 +7,20 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import ua.com.foxminded.university.dao.PeriodDao;
 import ua.com.foxminded.university.exception.DaoException;
 import ua.com.foxminded.university.exception.ServiceException;
 
 @Service
+@Transactional
 public class PeriodServiceImpl implements PeriodService {
     private PeriodDao periodDao;
 
     @Autowired
     public void setPeriodDao(PeriodDao periodDao) {
-        try {
-            this.periodDao = periodDao;
-        } catch (DaoException e) {
-            throw new ServiceException(e.getMessage(), e);
-        }
+        this.periodDao = periodDao;
     }
 
     @Override
@@ -53,18 +51,18 @@ public class PeriodServiceImpl implements PeriodService {
     }
 
     @Override
-    public int update(Period item) {
+    public void update(Period item) {
         try {
-            return periodDao.update(item);
+            periodDao.update(item);
         } catch (DaoException e) {
             throw new ServiceException(e.getMessage(), e);
         }
     }
 
     @Override
-    public int delete(int id) {
+    public void delete(int id) {
         try {
-            return periodDao.delete(id);
+            periodDao.delete(id);
         } catch (DaoException e) {
             throw new ServiceException(e.getMessage(), e);
         }

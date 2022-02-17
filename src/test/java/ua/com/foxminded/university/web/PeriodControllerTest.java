@@ -35,7 +35,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import ua.com.foxminded.university.config.WebConfig;
 import ua.com.foxminded.university.model.Period;
 import ua.com.foxminded.university.service.PeriodService;
-import ua.com.foxminded.university.web.model.CourseModel;
 import ua.com.foxminded.university.web.model.PeriodModel;
 
 @ExtendWith(MockitoExtension.class)
@@ -116,7 +115,6 @@ class PeriodControllerTest {
     @Test
     void testEdit() throws Exception {      
         when(modelMapper.map(periodModel, Period.class)).thenReturn(period);   
-        when(periodService.update(period)).thenReturn(1);
         mockMvc.perform(post("/periods/update")
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                         .param("id", "1")
@@ -155,7 +153,7 @@ class PeriodControllerTest {
                         .param("name", PERIOD_NAME)
                         .param("start", "08:00")
                         .param("end", "09:30")
-                .sessionAttr("period", new CourseModel()))
+                .sessionAttr("period", new PeriodModel()))
                 .andDo(print())
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/periods"));

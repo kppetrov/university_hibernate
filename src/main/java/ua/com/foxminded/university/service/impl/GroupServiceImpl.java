@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import ua.com.foxminded.university.dao.GroupDao;
 import ua.com.foxminded.university.exception.DaoException;
@@ -12,6 +13,7 @@ import ua.com.foxminded.university.model.Group;
 import ua.com.foxminded.university.service.GroupService;
 
 @Service
+@Transactional
 public class GroupServiceImpl implements GroupService { 
     private GroupDao groupDao;
 
@@ -57,18 +59,18 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public int update(Group item) {
+    public void update(Group item) {
         try {
-            return groupDao.update(item);
+            groupDao.update(item);
         } catch (DaoException e) {
             throw new ServiceException(e.getMessage(), e);
         }
     }
 
     @Override
-    public int delete(int id) {
+    public void delete(int id) {
         try {
-            return groupDao.delete(id);
+            groupDao.delete(id);
         } catch (DaoException e) {
             throw new ServiceException(e.getMessage(), e);
         }
