@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PeriodModel {
-    private int id;
+    private Long id;
     @NotBlank(message="{validation.name.NotBlank.message}")
     @Size(min=3, max=25, message="{validation.name.Size.message}")
     private String name;

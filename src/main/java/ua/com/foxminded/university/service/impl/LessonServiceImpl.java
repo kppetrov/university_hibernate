@@ -42,7 +42,7 @@ public class LessonServiceImpl implements LessonService {
     }
 
     @Override
-    public Lesson getById(int id) {
+    public Lesson getById(Long id) {
         try {
             return lessonDao.getById(id);
         } catch (DaoException e) {
@@ -83,7 +83,7 @@ public class LessonServiceImpl implements LessonService {
         }
     }
 
-    private boolean teacherIsBusy(LocalDate date, int periodId, int teacherId, int exceptLessonId) {
+    private boolean teacherIsBusy(LocalDate date, Long periodId, Long teacherId, Long exceptLessonId) {
         LOGGER.debug("Check if teacher is busy");
         try {
             Optional<Lesson> optionalLesson = lessonDao.getByDatePeriodIdTeacherId(date, periodId, teacherId);
@@ -96,7 +96,7 @@ public class LessonServiceImpl implements LessonService {
         }
     }
 
-    private boolean classroomIsOccupied(LocalDate date, int periodId, int classroomId, int exceptLessonId) {
+    private boolean classroomIsOccupied(LocalDate date, Long periodId, Long classroomId, Long exceptLessonId) {
         LOGGER.debug("Check if classroom is occupied");
         try {
             Optional<Lesson> optionalLesson = lessonDao.getByDatePeriodIdClassroomId(date, periodId, classroomId);
@@ -109,16 +109,16 @@ public class LessonServiceImpl implements LessonService {
         }
     }
 
-    private boolean teacherIsBusy(LocalDate date, int periodId, int teacherId) {
-        return teacherIsBusy(date, periodId, teacherId, -1);
+    private boolean teacherIsBusy(LocalDate date, Long periodId, Long teacherId) {
+        return teacherIsBusy(date, periodId, teacherId, -1L);
     }
 
-    private boolean classroomIsOccupied(LocalDate date, int periodId, int classroomId) {
-        return classroomIsOccupied(date, periodId, classroomId, -1);
+    private boolean classroomIsOccupied(LocalDate date, Long periodId, Long classroomId) {
+        return classroomIsOccupied(date, periodId, classroomId, -1L);
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(Long id) {
         try {
             lessonDao.delete(id);
         } catch (DaoException e) {
@@ -127,7 +127,7 @@ public class LessonServiceImpl implements LessonService {
     }
 
     @Override
-    public List<Lesson> getByCourseId(int curseId) {
+    public List<Lesson> getByCourseId(Long curseId) {
         try {
             return lessonDao.getByCourseId(curseId);
         } catch (DaoException e) {
@@ -136,7 +136,7 @@ public class LessonServiceImpl implements LessonService {
     }
 
     @Override
-    public List<Lesson> getByGroupId(int groupId) {
+    public List<Lesson> getByGroupId(Long groupId) {
         try {
             return lessonDao.getByGroupId(groupId);
         } catch (DaoException e) {
@@ -145,7 +145,7 @@ public class LessonServiceImpl implements LessonService {
     }
 
     @Override
-    public List<Lesson> getByTeacherId(int teacherId) {
+    public List<Lesson> getByTeacherId(Long teacherId) {
         try {
             return lessonDao.getByTeacherId(teacherId);
         } catch (DaoException e) {

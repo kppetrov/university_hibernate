@@ -20,22 +20,22 @@ public class LessonDaoImpl extends GenericDaoImpl<Lesson> implements LessonDao {
     }
 
     @Override
-    public List<Lesson> getByCourseId(int curseId) {
+    public List<Lesson> getByCourseId(Long curseId) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public List<Lesson> getByGroupId(int groupId) {
+    public List<Lesson> getByGroupId(Long groupId) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public List<Lesson> getByTeacherId(int teacherId) {
+    public List<Lesson> getByTeacherId(Long teacherId) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public Optional<Lesson> getByDatePeriodIdTeacherId(LocalDate date, int periodId, int teacherId) {
+    public Optional<Lesson> getByDatePeriodIdTeacherId(LocalDate date, Long periodId, Long teacherId) {
         try {
             Lesson lesson =  getEntityManager()
                     .createNamedQuery(Lesson.FIND_LESSONS_BY_DATE_ADN_PERIOD_ID_AND_TEACHER_ID, Lesson.class)
@@ -56,7 +56,7 @@ public class LessonDaoImpl extends GenericDaoImpl<Lesson> implements LessonDao {
     }
 
     @Override
-    public Optional<Lesson> getByDatePeriodIdClassroomId(LocalDate date, int periodId, int classroomId) {
+    public Optional<Lesson> getByDatePeriodIdClassroomId(LocalDate date, Long periodId, Long classroomId) {
         try {
             Lesson lesson = getEntityManager()
                     .createNamedQuery(Lesson.FIND_LESSONS_BY_DATE_ADN_PERIOD_ID_AND_CLASSROOM_ID, Lesson.class)

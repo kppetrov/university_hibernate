@@ -37,16 +37,16 @@ class CourseDaoImplTest {
     @Autowired
     private CourseDaoImpl dao; 
 
-    private Course course1 = new Course(1, "course1");
-    private Course course2 = new Course(2, "course2");
-    private Course course3 = new Course(3, "course3");
-    private Group group1 = new Group(1, "group1");
-    private Teacher teacher1 = new Teacher(1, "first_name1", "last_name1", Gender.MAIL, LocalDate.of(1971, 01, 01));
-    private Period period1 = new Period(1, "period1", LocalTime.of(8, 0), LocalTime.of(9, 30));
-    private Period period2 = new Period(2, "period2", LocalTime.of(9, 50), LocalTime.of(11, 20));
-    private Classroom classroom1 = new Classroom(1, "classroom1");
-    private Lesson lesson1 = new Lesson(1, course1, LocalDate.of(2021, 01, 01), period1, teacher1, classroom1);
-    private Lesson lesson2 = new Lesson(2, course1, LocalDate.of(2021, 01, 01), period2, teacher1, classroom1);
+    private Course course1 = new Course(1L, "course1");
+    private Course course2 = new Course(2L, "course2");
+    private Course course3 = new Course(3L, "course3");
+    private Group group1 = new Group(1L, "group1");
+    private Teacher teacher1 = new Teacher(1L, "first_name1", "last_name1", Gender.MAIL, LocalDate.of(1971, 01, 01));
+    private Period period1 = new Period(1L, "period1", LocalTime.of(8, 0), LocalTime.of(9, 30));
+    private Period period2 = new Period(2L, "period2", LocalTime.of(9, 50), LocalTime.of(11, 20));
+    private Classroom classroom1 = new Classroom(1L, "classroom1");
+    private Lesson lesson1 = new Lesson(1L, course1, LocalDate.of(2021, 01, 01), period1, teacher1, classroom1);
+    private Lesson lesson2 = new Lesson(2L, course1, LocalDate.of(2021, 01, 01), period2, teacher1, classroom1);
 
     @Test
     @Sql(value = { "/insert-data.sql" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
@@ -69,7 +69,7 @@ class CourseDaoImplTest {
     @Test
     @Sql(value = { "/insert-data.sql" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
     void shouldThrowExceptionWhenCourseWithSuchIdNotExist() {
-        int id = 10;
+        Long id = 10L;
         String msg = String.format(ID_NOT_EXIST, Course.class, id);       
         DaoException exception = assertThrows(DaoException.class, () -> dao.getById(id));
         assertEquals(msg, exception.getMessage());
@@ -87,7 +87,7 @@ class CourseDaoImplTest {
     @Test
     @Sql(value = { "/insert-data.sql" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
     void testUpdate() {
-        Course course = new Course(1, "new name");        
+        Course course = new Course(1L, "new name");        
         dao.update(course);
         Course actual = dao.getById(course.getId());
         assertEquals(course, actual);
@@ -96,7 +96,7 @@ class CourseDaoImplTest {
     @Test
     @Sql(value = { "/insert-data.sql" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
     void testDelete() {
-        int id = 3;
+        Long id = 3L;
         dao.delete(id);
         String msg = String.format(ID_NOT_EXIST, Course.class, id);       
         DaoException exception = assertThrows(DaoException.class, () -> dao.getById(id));

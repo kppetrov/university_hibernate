@@ -24,9 +24,9 @@ class GroupDaoImplTest {
     @Autowired
     private GroupDaoImpl dao;
 
-    private Group group1 = new Group(1, "group1");
-    private Group group2 = new Group(2, "group2");
-    private Group group3 = new Group(3, "group3");
+    private Group group1 = new Group(1L, "group1");
+    private Group group2 = new Group(2L, "group2");
+    private Group group3 = new Group(3L, "group3");
 
     @Test
     @Sql(value = { "/insert-data.sql" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
@@ -49,7 +49,7 @@ class GroupDaoImplTest {
     @Test
     @Sql(value = { "/insert-data.sql" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
     void shouldThrowExceptionWhenGroupWithSuchIdNotExist() {
-        int id = 10;
+        Long id = 10L;
         String msg = String.format(ID_NOT_EXIST, Group.class, id);       
         DaoException exception = assertThrows(DaoException.class, () -> dao.getById(id));
         assertEquals(msg, exception.getMessage());
@@ -67,7 +67,7 @@ class GroupDaoImplTest {
     @Test
     @Sql(value = { "/insert-data.sql" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
     void testUpdate() {
-        Group group = new Group(1, "new name");
+        Group group = new Group(1L, "new name");
         dao.update(group);
         Group actual = dao.getById(group.getId());
         assertEquals(group, actual);
@@ -76,7 +76,7 @@ class GroupDaoImplTest {
     @Test
     @Sql(value = { "/insert-data.sql" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
     void testDelete() {
-        int id = 3;
+        Long id = 3L;
         String msg = String.format(ID_NOT_EXIST, Group.class, id);
         dao.delete(id);        
         DaoException exception = assertThrows(DaoException.class, () -> dao.getById(id));

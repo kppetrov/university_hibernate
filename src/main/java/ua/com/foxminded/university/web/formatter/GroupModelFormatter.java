@@ -17,7 +17,7 @@ public class GroupModelFormatter implements Formatter<GroupModel>{
     @Override
     public GroupModel parse(String id, Locale locale) throws ParseException {
         GroupModel groupModel = new GroupModel();
-        groupModel.setId(Integer.parseInt(id));
+        groupModel.setId(Long.parseLong(id));
         return groupModel;
     }
 }

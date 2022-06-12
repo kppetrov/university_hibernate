@@ -36,7 +36,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Student getById(int id) {
+    public Student getById(Long id) {
         try {
             return studentDao.getById(id);
         } catch (DaoException e) {
@@ -63,7 +63,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(Long id) {
         try {
             studentDao.delete(id);
         } catch (DaoException e) {

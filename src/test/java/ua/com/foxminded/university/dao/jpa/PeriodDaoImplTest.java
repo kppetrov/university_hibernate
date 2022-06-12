@@ -25,9 +25,9 @@ class PeriodDaoImplTest {
     @Autowired
     private PeriodDaoImpl dao;
 
-    private Period period1 = new Period(1, "period1", LocalTime.of(8, 0), LocalTime.of(9, 30));
-    private Period period2 = new Period(2, "period2", LocalTime.of(9, 50), LocalTime.of(11, 20));
-    private Period period3 = new Period(3, "period3", LocalTime.of(11, 50), LocalTime.of(13, 20));
+    private Period period1 = new Period(1L, "period1", LocalTime.of(8, 0), LocalTime.of(9, 30));
+    private Period period2 = new Period(2L, "period2", LocalTime.of(9, 50), LocalTime.of(11, 20));
+    private Period period3 = new Period(3L, "period3", LocalTime.of(11, 50), LocalTime.of(13, 20));
 
     @Test
     @Sql(value = { "/insert-data.sql" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
@@ -50,7 +50,7 @@ class PeriodDaoImplTest {
     @Test
     @Sql(value = { "/insert-data.sql" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
     void shouldThrowExceptionWhenPeriodWithSuchIdNotExist() {
-        int id = 10;
+        Long id = 10L;
         String msg = String.format(ID_NOT_EXIST, Period.class, id);        
         DaoException exception = assertThrows(DaoException.class, () -> dao.getById(id));
         assertEquals(msg, exception.getMessage());
@@ -70,7 +70,7 @@ class PeriodDaoImplTest {
     @Test
     @Sql(value = { "/insert-data.sql" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
     void testUpdate() {
-        Period period = new Period(1, "new name", LocalTime.of(11, 20), LocalTime.of(12, 50));
+        Period period = new Period(1L, "new name", LocalTime.of(11, 20), LocalTime.of(12, 50));
         dao.update(period);
         Period actual = dao.getById(period.getId());
         assertEquals(period, actual);
@@ -79,7 +79,7 @@ class PeriodDaoImplTest {
     @Test
     @Sql(value = { "/insert-data.sql" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
     void testDelete() {
-        int id = 3;
+        Long id = 3L;
         String msg = String.format(ID_NOT_EXIST, Period.class, id);
         dao.delete(id);        
         DaoException exception = assertThrows(DaoException.class, () -> dao.getById(id));

@@ -38,7 +38,7 @@ public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private Long id;
     
     @Column(name = "name")
     private String name;
@@ -68,7 +68,7 @@ public class Course {
         return lessons.add(lesson);        
     }
 
-    public Course(int id, String name) {
+    public Course(Long id, String name) {
         this.id = id;
         this.name = name;
     }

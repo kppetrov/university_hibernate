@@ -27,8 +27,8 @@ class StudentServiceImplTest {
     @InjectMocks
     private StudentServiceImpl service;
 
-    private Student student = new Student(1, "first_name", "last_name", Gender.MAIL, LocalDate.of(2001, 01, 01),
-            new Group(1, "group1"));
+    private Student student = new Student(1L, "first_name", "last_name", Gender.MAIL, LocalDate.of(2001, 01, 01),
+            new Group(1L, "group1"));
 
     @Test
     void testGetAll() {

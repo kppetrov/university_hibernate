@@ -13,8 +13,8 @@ import ua.com.foxminded.university.model.Student;
 
 class StudentModelTest {
     private ModelMapper modelMapper = new ModelMapper();
-    private Student student = new Student(1, "first_name", "last_name", Gender.MAIL, LocalDate.of(2001, 01, 01),
-            new Group(1, "group1"));
+    private Student student = new Student(1L, "first_name", "last_name", Gender.MAIL, LocalDate.of(2001, 01, 01),
+            new Group(1L, "group1"));
     private StudentModel studentModel = new StudentModel(student.getId(), student.getFirstName(), student.getLastName(),
             student.getGender(), student.getBirthdate(), student.getGroup().getId(), student.getGroup().getName());
 

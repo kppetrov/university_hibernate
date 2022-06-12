@@ -32,7 +32,7 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public Group getById(int id) {
+    public Group getById(Long id) {
         try {
             return groupDao.getById(id);
         } catch (DaoException e) {
@@ -68,7 +68,7 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(Long id) {
         try {
             groupDao.delete(id);
         } catch (DaoException e) {
@@ -77,7 +77,7 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public Group getByIdWithDetail(int id) {
+    public Group getByIdWithDetail(Long id) {
         try {
             return groupDao.getByIdWithDetail(id);
         } catch (DaoException e) {
@@ -86,7 +86,7 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public List<Group> getByCourseId(int curseId) {
+    public List<Group> getByCourseId(Long curseId) {
         try {
             return groupDao.getByCourseId(curseId);
         } catch (DaoException e) {

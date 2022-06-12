@@ -42,7 +42,7 @@ public abstract class GenericDaoImpl<T> implements GenericDao<T> {
     }
 
     @Override
-    public T getById(int id) {
+    public T getById(Long id) {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Getting {} by id. id={}", entityClass, id);
         }
@@ -87,7 +87,7 @@ public abstract class GenericDaoImpl<T> implements GenericDao<T> {
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(Long id) {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Removung {}. id={}", entityClass, id);
         }

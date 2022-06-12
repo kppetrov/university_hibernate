@@ -55,9 +55,9 @@ class TeacherControllerTest {
     @InjectMocks
     private TeacherController controller;
 
-    private Teacher teacher = new Teacher(1, "first_name", "last_name", Gender.MAIL, BIRTHDATE);
-    private TeacherListModel teacherListModel = new TeacherListModel(1, TEACHER_FIRST_NAME, TEACHER_LAST_NAME);
-    private TeacherModel teacherModel = new TeacherModel(1, TEACHER_FIRST_NAME, TEACHER_LAST_NAME, Gender.MAIL, BIRTHDATE);
+    private Teacher teacher = new Teacher(1L, "first_name", "last_name", Gender.MAIL, BIRTHDATE);
+    private TeacherListModel teacherListModel = new TeacherListModel(1L, TEACHER_FIRST_NAME, TEACHER_LAST_NAME);
+    private TeacherModel teacherModel = new TeacherModel(1L, TEACHER_FIRST_NAME, TEACHER_LAST_NAME, Gender.MAIL, BIRTHDATE);
 
 
     @BeforeEach
@@ -82,7 +82,7 @@ class TeacherControllerTest {
     
     @Test
     void testShow() throws Exception {
-        when(teacherService.getById(1)).thenReturn(teacher);
+        when(teacherService.getById(1L)).thenReturn(teacher);
         when(modelMapper.map(teacher, TeacherModel.class)).thenReturn(teacherModel);
         mockMvc.perform(get("/teachers/1"))
                 .andDo(print())
@@ -90,13 +90,13 @@ class TeacherControllerTest {
                 .andExpect(view().name("teachers/show"))
                 .andExpect(model().attributeExists("teacher"))
                 .andExpect(model().attribute("teacher", teacherModel));
-        verify(teacherService, times(1)).getById(1);
+        verify(teacherService, times(1)).getById(1L);
         verifyNoMoreInteractions(teacherService);
     }
     
     @Test
     void testEditForm() throws Exception {
-        when(teacherService.getById(1)).thenReturn(teacher);
+        when(teacherService.getById(1L)).thenReturn(teacher);
         when(modelMapper.map(teacher, TeacherModel.class)).thenReturn(teacherModel);
         mockMvc.perform(get("/teachers/edit/1"))
                 .andDo(print())
@@ -104,7 +104,7 @@ class TeacherControllerTest {
                 .andExpect(view().name("teachers/form"))
                 .andExpect(model().attributeExists("teacher"))
                 .andExpect(model().attribute("teacher", teacherModel));
-        verify(teacherService, times(1)).getById(1);
+        verify(teacherService, times(1)).getById(1L);
         verifyNoMoreInteractions(teacherService);
     }
     
@@ -152,8 +152,8 @@ class TeacherControllerTest {
     
     @Test
     void testCreate() throws Exception {
-        Teacher newTteacher = new Teacher(0, "first_name", "last_name", Gender.MAIL, BIRTHDATE);
-        TeacherModel newTeacherModel = new TeacherModel(0, TEACHER_FIRST_NAME, TEACHER_LAST_NAME, Gender.MAIL, BIRTHDATE);
+        Teacher newTteacher = new Teacher(null, "first_name", "last_name", Gender.MAIL, BIRTHDATE);
+        TeacherModel newTeacherModel = new TeacherModel(null, TEACHER_FIRST_NAME, TEACHER_LAST_NAME, Gender.MAIL, BIRTHDATE);
         when(modelMapper.map(newTeacherModel, Teacher.class)).thenReturn(newTteacher);   
         when(teacherService.insert(newTteacher)).thenReturn(teacher);
         mockMvc.perform(post("/teachers/add")
@@ -173,7 +173,7 @@ class TeacherControllerTest {
         TeacherModel formObject = formObjectArgument.getValue();
       
         assertAll(
-                () -> assertEquals(0, formObject.getId()), 
+                () -> assertEquals(null, formObject.getId()), 
                 () -> assertEquals(TEACHER_FIRST_NAME, formObject.getFirstName()),
                 () -> assertEquals(TEACHER_LAST_NAME, formObject.getLastName()),
                 () -> assertEquals(Gender.MAIL, formObject.getGender()),
@@ -190,7 +190,7 @@ class TeacherControllerTest {
                 .andDo(print())
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/teachers"));
-        verify(teacherService, times(1)).delete(1);
+        verify(teacherService, times(1)).delete(1L);
         verifyNoMoreInteractions(teacherService);
     }
 }

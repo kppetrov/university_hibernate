@@ -5,7 +5,7 @@
 	<div th:replace="~{index :: header('groups')}"></div>
 	<main class="container">
 		<form th:object="${group}"
-			th:action="@{/groups/{path}(path=*{id == 0 ? 'add' : 'update'})}"
+			th:action="@{/groups/{path}(path=*{id == null ? 'add' : 'update'})}"
 			th:method="post">
 			<div class="mb-3">
 				<input type="hidden" th:field="*{id}" />

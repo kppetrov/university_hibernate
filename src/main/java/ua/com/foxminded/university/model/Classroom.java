@@ -23,7 +23,7 @@ public class Classroom {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private Long id;
     
     @NotBlank(message="{validation.name.NotBlank.message}")
     @Size(min=3, max=25, message="{validation.name.Size.message}")

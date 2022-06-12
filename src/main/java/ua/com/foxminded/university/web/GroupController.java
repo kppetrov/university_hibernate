@@ -45,7 +45,7 @@ public class GroupController {
     }
     
     @GetMapping(value = "/{id}")
-    public String show(@PathVariable("id") Integer id, Model model) {
+    public String show(@PathVariable("id") Long id, Model model) {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Showing group. id = {}", id);
         }
@@ -55,7 +55,7 @@ public class GroupController {
     }  
     
     @GetMapping(value = "/edit/{id}")
-    public String editForm(@PathVariable("id") Integer id, Model model) {
+    public String editForm(@PathVariable("id") Long id, Model model) {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Editing group. id = {}", id);
         }
@@ -100,7 +100,7 @@ public class GroupController {
     }
     
     @GetMapping(value = "/remove/{id}")
-    public String remove(@PathVariable("id") Integer id) {
+    public String remove(@PathVariable("id") Long id) {
         groupService.delete(id);
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Group has been deleted. id = {}", id);

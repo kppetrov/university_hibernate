@@ -44,8 +44,8 @@ class ClassroomControllerTest {
     @InjectMocks
     private ClassroomController controller;
 
-    private Classroom classroom = new Classroom(1, CLASSROOM_NAME);
-    private ClassroomModel classroomModel = new ClassroomModel(1, CLASSROOM_NAME);
+    private Classroom classroom = new Classroom(1L, CLASSROOM_NAME);
+    private ClassroomModel classroomModel = new ClassroomModel(1L, CLASSROOM_NAME);
 
     @BeforeEach
     public void beforeEach() throws Exception {
@@ -70,7 +70,7 @@ class ClassroomControllerTest {
     
     @Test
     void testShow() throws Exception {
-        when(classroomService.getById(1)).thenReturn(classroom);
+        when(classroomService.getById(1L)).thenReturn(classroom);
         when(modelMapper.map(classroom, ClassroomModel.class)).thenReturn(classroomModel);
         mockMvc.perform(get("/classrooms/1"))
                 .andDo(print())
@@ -78,13 +78,13 @@ class ClassroomControllerTest {
                 .andExpect(view().name("classrooms/show"))
                 .andExpect(model().attributeExists("classroom"))
                 .andExpect(model().attribute("classroom", classroomModel));
-        verify(classroomService, times(1)).getById(1);
+        verify(classroomService, times(1)).getById(1L);
         verifyNoMoreInteractions(classroomService);
     }
     
     @Test
     void testEditForm() throws Exception {
-        when(classroomService.getById(1)).thenReturn(classroom);
+        when(classroomService.getById(1L)).thenReturn(classroom);
         when(modelMapper.map(classroom, ClassroomModel.class)).thenReturn(classroomModel);
         mockMvc.perform(get("/classrooms/edit/1"))
                 .andDo(print())
@@ -92,7 +92,7 @@ class ClassroomControllerTest {
                 .andExpect(view().name("classrooms/form"))
                 .andExpect(model().attributeExists("classroom"))
                 .andExpect(model().attribute("classroom", classroomModel));
-        verify(classroomService, times(1)).getById(1);
+        verify(classroomService, times(1)).getById(1L);
         verifyNoMoreInteractions(classroomService);
     }
     
@@ -134,8 +134,8 @@ class ClassroomControllerTest {
     
     @Test
     void testCreate() throws Exception {
-        ClassroomModel newClassroomModel = new ClassroomModel(0, CLASSROOM_NAME);
-        Classroom newClassroom = new Classroom(0, CLASSROOM_NAME);
+        ClassroomModel newClassroomModel = new ClassroomModel(null, CLASSROOM_NAME);
+        Classroom newClassroom = new Classroom(null, CLASSROOM_NAME);
         
         when(modelMapper.map(newClassroomModel, Classroom.class)).thenReturn(newClassroom);        
         when(classroomService.insert(newClassroom)).thenReturn(classroom);
@@ -155,7 +155,7 @@ class ClassroomControllerTest {
         
         assertAll(
                 () -> assertEquals(CLASSROOM_NAME, formObject.getName()), 
-                () -> assertEquals(0, formObject.getId())
+                () -> assertEquals(null, formObject.getId())
                 ); 
         
         verify(classroomService, times(1)).insert(newClassroom);
@@ -168,7 +168,7 @@ class ClassroomControllerTest {
                 .andDo(print())
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/classrooms"));
-        verify(classroomService, times(1)).delete(1);
+        verify(classroomService, times(1)).delete(1L);
         verifyNoMoreInteractions(classroomService);
     }
 }

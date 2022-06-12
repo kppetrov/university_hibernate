@@ -25,7 +25,7 @@ class PeriodServiceImplTest {
     @InjectMocks
     private PeriodServiceImpl service;
     
-    private Period period = new Period(1, "period", LocalTime.of(8, 0), LocalTime.of(9, 30));
+    private Period period = new Period(1L, "period", LocalTime.of(8, 0), LocalTime.of(9, 30));
 
     @Test
     void testGetAll() {

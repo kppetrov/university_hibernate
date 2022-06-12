@@ -50,8 +50,8 @@ class GroupControllerTest {
     @InjectMocks
     private GroupController controller;
 
-    private Group group = new Group(1, GROUP_NAME);
-    private GroupModel groupModel = new GroupModel(1, GROUP_NAME);
+    private Group group = new Group(1L, GROUP_NAME);
+    private GroupModel groupModel = new GroupModel(1L, GROUP_NAME);
 
     @BeforeEach
     public void beforeEach() throws Exception {
@@ -76,7 +76,7 @@ class GroupControllerTest {
     
     @Test
     void testShow() throws Exception {
-        when(groupService.getById(1)).thenReturn(group);
+        when(groupService.getById(1L)).thenReturn(group);
         when(modelMapper.map(group, GroupModel.class)).thenReturn(groupModel);
         mockMvc.perform(get("/groups/1"))
                 .andDo(print())
@@ -84,13 +84,13 @@ class GroupControllerTest {
                 .andExpect(view().name("groups/show"))
                 .andExpect(model().attributeExists("group"))
                 .andExpect(model().attribute("group", groupModel));
-        verify(groupService, times(1)).getById(1);
+        verify(groupService, times(1)).getById(1L);
         verifyNoMoreInteractions(groupService);
     }
     
     @Test
     void testEditForm() throws Exception {
-        when(groupService.getById(1)).thenReturn(group);
+        when(groupService.getById(1L)).thenReturn(group);
         when(modelMapper.map(group, GroupModel.class)).thenReturn(groupModel);
         mockMvc.perform(get("/groups/edit/1"))
                 .andDo(print())
@@ -98,7 +98,7 @@ class GroupControllerTest {
                 .andExpect(view().name("groups/form"))
                 .andExpect(model().attributeExists("group"))
                 .andExpect(model().attribute("group", groupModel));
-        verify(groupService, times(1)).getById(1);
+        verify(groupService, times(1)).getById(1L);
         verifyNoMoreInteractions(groupService);
     }
     
@@ -140,8 +140,8 @@ class GroupControllerTest {
     
     @Test
     void testCreate() throws Exception {
-        Group newGroup = new Group(0, GROUP_NAME);
-        GroupModel newGroupModel = new GroupModel(0, GROUP_NAME);
+        Group newGroup = new Group(null, GROUP_NAME);
+        GroupModel newGroupModel = new GroupModel(null, GROUP_NAME);
       
         when(modelMapper.map(newGroupModel, Group.class)).thenReturn(newGroup);
         when(groupService.insert(newGroup)).thenReturn(newGroup);
@@ -161,7 +161,7 @@ class GroupControllerTest {
         
         assertAll(
                 () -> assertEquals(GROUP_NAME, formObject.getName()), 
-                () -> assertEquals(0, formObject.getId())
+                () -> assertEquals(null, formObject.getId())
                 ); 
         
         verify(groupService, times(1)).insert(newGroup);
@@ -174,7 +174,7 @@ class GroupControllerTest {
                 .andDo(print())
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/groups"));
-        verify(groupService, times(1)).delete(1);
+        verify(groupService, times(1)).delete(1L);
         verifyNoMoreInteractions(groupService);
     }
 }

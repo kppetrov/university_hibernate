@@ -38,12 +38,12 @@ class LessonServiceImplTest {
     @InjectMocks
     private LessonServiceImpl service;
 
-    private Course course = new Course(1, "course");
-    private Teacher teacher = new Teacher(1, "first_name", "last_name", Gender.MAIL, LocalDate.of(1971, 01, 01));
-    private Period period = new Period(1, "period", LocalTime.of(8, 0), LocalTime.of(9, 30));
-    private Classroom classroom = new Classroom(1, "classroom");
-    private Lesson lesson = new Lesson(1, course, LocalDate.of(2021, 01, 01), period, teacher, classroom);
-    private Lesson alreadyExistsLesson = new Lesson(2, course, LocalDate.of(2021, 01, 01), period, teacher, classroom);
+    private Course course = new Course(1L, "course");
+    private Teacher teacher = new Teacher(1L, "first_name", "last_name", Gender.MAIL, LocalDate.of(1971, 01, 01));
+    private Period period = new Period(1L, "period", LocalTime.of(8, 0), LocalTime.of(9, 30));
+    private Classroom classroom = new Classroom(1L, "classroom");
+    private Lesson lesson = new Lesson(1L, course, LocalDate.of(2021, 01, 01), period, teacher, classroom);
+    private Lesson alreadyExistsLesson = new Lesson(2L, course, LocalDate.of(2021, 01, 01), period, teacher, classroom);
 
     @Test
     void testGetAll() {
@@ -127,7 +127,7 @@ class LessonServiceImplTest {
 
     @Test
     void testGetByCourseId() {
-        int course_id = 1;
+        Long course_id = 1L;
         List<Lesson> lessons = new ArrayList<>();
         lessons.add(lesson);
         when(lessonDao.getByCourseId(course_id)).thenReturn(lessons);
@@ -138,7 +138,7 @@ class LessonServiceImplTest {
 
     @Test
     void testGetByGroupId() {
-        int group_id = 1;
+        Long group_id = 1L;
         List<Lesson> lessons = new ArrayList<>();
         lessons.add(lesson);
         when(lessonDao.getByGroupId(group_id)).thenReturn(lessons);
@@ -149,7 +149,7 @@ class LessonServiceImplTest {
 
     @Test
     void testGetByTeacherId() {
-        int teacher_id = 1;
+        Long teacher_id = 1L;
         List<Lesson> lessons = new ArrayList<>();
         lessons.add(lesson);
         when(lessonDao.getByTeacherId(teacher_id)).thenReturn(lessons);

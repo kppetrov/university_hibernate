@@ -15,12 +15,12 @@ public class GroupDaoImpl extends GenericDaoImpl<Group> implements GroupDao {
     }
     
     @Override
-    public Group getByIdWithDetail(int id) {
+    public Group getByIdWithDetail(Long id) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public List<Group> getByCourseId(int curseId) {
+    public List<Group> getByCourseId(Long curseId) {
         throw new UnsupportedOperationException();
     }
 

@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LessonDetailModel {
-    private int id;
+    private Long id;
     private String courseName; 
     @DateTimeFormat(iso = ISO.DATE)
     private LocalDate date;

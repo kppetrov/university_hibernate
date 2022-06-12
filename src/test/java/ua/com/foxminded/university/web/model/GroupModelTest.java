@@ -9,7 +9,7 @@ import ua.com.foxminded.university.model.Group;
 
 class GroupModelTest {
     private ModelMapper modelMapper = new ModelMapper();
-    private Group group = new Group(1, "group1");
+    private Group group = new Group(1L, "group1");
     private GroupModel groupModel = new GroupModel(group.getId(), group.getName());
 
     @Test

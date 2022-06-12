@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TeacherListModel {
-    private int id;
+    private Long id;
     private String firstName;
     private String lastName;
 }

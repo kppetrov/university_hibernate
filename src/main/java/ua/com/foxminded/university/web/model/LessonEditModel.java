@@ -15,12 +15,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LessonEditModel {
-    private int id;
-    private int courseId; 
+    private Long id;
+    private Long courseId; 
     @DateTimeFormat(iso = ISO.DATE)
     @NotNull(message = "{validation.lesson.date.NotNull.message}")
     private LocalDate date;
-    private int periodId;
-    private int classroomId;
-    private int teacherId;
+    private Long periodId;
+    private Long classroomId;
+    private Long teacherId;
 }

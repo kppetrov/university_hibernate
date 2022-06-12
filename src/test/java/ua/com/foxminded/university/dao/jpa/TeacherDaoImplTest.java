@@ -26,9 +26,9 @@ class TeacherDaoImplTest {
     @Autowired
     private TeacherDaoImpl dao;
     
-    private Teacher teacher1 = new Teacher(1, "first_name1", "last_name1", Gender.MAIL, LocalDate.of(1971, 01, 01));
-    private Teacher teacher2 = new Teacher(2, "first_name2", "last_name2", Gender.FEMAIL, LocalDate.of(1972, 02, 02));  
-    private Teacher teacher3 = new Teacher(3, "first_name3", "last_name3", Gender.FEMAIL, LocalDate.of(1973, 03, 03));  
+    private Teacher teacher1 = new Teacher(1L, "first_name1", "last_name1", Gender.MAIL, LocalDate.of(1971, 01, 01));
+    private Teacher teacher2 = new Teacher(2L, "first_name2", "last_name2", Gender.FEMAIL, LocalDate.of(1972, 02, 02));  
+    private Teacher teacher3 = new Teacher(3L, "first_name3", "last_name3", Gender.FEMAIL, LocalDate.of(1973, 03, 03));  
 
     @Test
     @Sql(value = { "/insert-data.sql" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
@@ -51,7 +51,7 @@ class TeacherDaoImplTest {
     @Test
     @Sql(value = { "/insert-data.sql" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
     void shouldThrowExceptionWhenTeacherWithSuchIdNotExist() {
-        int id = 10;
+        Long id = 10L;
         String msg = String.format(ID_NOT_EXIST, Teacher.class, id);        
         DaoException exception = assertThrows(DaoException.class, () -> dao.getById(id));
         assertEquals(msg, exception.getMessage());
@@ -72,7 +72,7 @@ class TeacherDaoImplTest {
     @Test
     @Sql(value = { "/insert-data.sql" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
     void testUpdate() {
-        Teacher teacher = new Teacher(1, "new first_name", "new last_name", Gender.MAIL, LocalDate.of(1980, 01, 01));
+        Teacher teacher = new Teacher(1L, "new first_name", "new last_name", Gender.MAIL, LocalDate.of(1980, 01, 01));
         dao.update(teacher);
         Teacher actual = dao.getById(teacher.getId());
         assertEquals(teacher, actual);
@@ -81,7 +81,7 @@ class TeacherDaoImplTest {
     @Test
     @Sql(value = { "/insert-data.sql" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
     void testDelete() {
-        int id = 3;
+        Long id = 3L;
         String msg = String.format(ID_NOT_EXIST, Teacher.class, id);
         dao.delete(id);        
         DaoException exception = assertThrows(DaoException.class, () -> dao.getById(id));

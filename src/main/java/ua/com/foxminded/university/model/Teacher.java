@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "teachers")
 public class Teacher extends AbstractPerson {
 
-    public Teacher(int id, String firstName, String lastName, Gender gender, LocalDate birthdate) {
+    public Teacher(Long id, String firstName, String lastName, Gender gender, LocalDate birthdate) {
         super(id, firstName, lastName, gender, birthdate);
     }
 

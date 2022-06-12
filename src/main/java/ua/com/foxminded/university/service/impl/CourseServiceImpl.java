@@ -32,7 +32,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Course getById(int id) {
+    public Course getById(Long id) {
         try {
             return courseDao.getById(id);
         } catch (DaoException e) {
@@ -59,7 +59,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(Long id) {
         try {
             courseDao.delete(id);
         } catch (DaoException e) {
@@ -68,7 +68,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Course getByIdWithDetail(int id) {
+    public Course getByIdWithDetail(Long id) {
         try {
             return courseDao.getByIdWithDetail(id);
         } catch (DaoException e) {

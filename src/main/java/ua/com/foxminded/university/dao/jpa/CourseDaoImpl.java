@@ -20,7 +20,7 @@ public class CourseDaoImpl extends GenericDaoImpl<Course> implements CourseDao {
     }
 
     @Override
-    public Course getByIdWithDetail(int id) {
+    public Course getByIdWithDetail(Long id) {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Getting course by id with detail. id={}", id);
         }

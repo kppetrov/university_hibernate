@@ -67,14 +67,14 @@ class CourseControllerTest {
     private FormattingConversionService formattingConversionService = new FormattingConversionService();
     private GroupModelFormatter groupModelFormatter = new GroupModelFormatter();
 
-    private Group group = new Group(1, GROUP_NAME);
-    private GroupModel groupModel = new GroupModel(1, GROUP_NAME);
-    private Group group2 = new Group(2, GROUP_NAME2);
-    private GroupModel groupModel2 = new GroupModel(2, GROUP_NAME);
-    private Course course = new Course(1, COURSE_NAME, null, new HashSet<>(Arrays.asList(group, group2)));
-    private CourseModelWithGroups courseModelWithGroups = new CourseModelWithGroups(1, COURSE_NAME,
+    private Group group = new Group(1L, GROUP_NAME);
+    private GroupModel groupModel = new GroupModel(1L, GROUP_NAME);
+    private Group group2 = new Group(2L, GROUP_NAME2);
+    private GroupModel groupModel2 = new GroupModel(2L, GROUP_NAME);
+    private Course course = new Course(1L, COURSE_NAME, null, new HashSet<>(Arrays.asList(group, group2)));
+    private CourseModelWithGroups courseModelWithGroups = new CourseModelWithGroups(1L, COURSE_NAME,
             new HashSet<>(Arrays.asList(groupModel, groupModel2)));
-    private CourseModel courseModel = new CourseModel(1, COURSE_NAME); 
+    private CourseModel courseModel = new CourseModel(1L, COURSE_NAME); 
 
     @BeforeEach
     public void beforeEach() throws Exception {
@@ -100,7 +100,7 @@ class CourseControllerTest {
     
     @Test
     void testShow() throws Exception {
-        when(courseService.getByIdWithDetail(1)).thenReturn(course);
+        when(courseService.getByIdWithDetail(1L)).thenReturn(course);
         when(modelMapper.map(course, CourseModelWithGroups.class)).thenReturn(courseModelWithGroups);
         mockMvc.perform(get("/courses/1"))
                 .andDo(print())
@@ -108,7 +108,7 @@ class CourseControllerTest {
                 .andExpect(view().name("courses/show"))
                 .andExpect(model().attributeExists("course"))
                 .andExpect(model().attribute("course", courseModelWithGroups));
-        verify(courseService, times(1)).getByIdWithDetail(1);
+        verify(courseService, times(1)).getByIdWithDetail(1L);
         verifyNoMoreInteractions(courseService);
     }
     
@@ -118,7 +118,7 @@ class CourseControllerTest {
         List<GroupModel> groupModels = Arrays.asList(groupModel);
         when(groupService.getAll()).thenReturn(groups);
         when(modelMapper.map(group, GroupModel.class)).thenReturn(groupModel);
-        when(courseService.getByIdWithDetail(1)).thenReturn(course);
+        when(courseService.getByIdWithDetail(1L)).thenReturn(course);
         when(modelMapper.map(course, CourseModelWithGroups.class)).thenReturn(courseModelWithGroups);
         mockMvc.perform(get("/courses/edit/1"))
                 .andDo(print())
@@ -128,7 +128,7 @@ class CourseControllerTest {
                 .andExpect(model().attribute("course", courseModelWithGroups))
                 .andExpect(model().attributeExists("allGroups"))
                 .andExpect(model().attribute("allGroups", groupModels));
-        verify(courseService, times(1)).getByIdWithDetail(1);
+        verify(courseService, times(1)).getByIdWithDetail(1L);
         verifyNoMoreInteractions(courseService);
         verify(groupService, times(1)).getAll();
         verifyNoMoreInteractions(groupService);
@@ -147,8 +147,8 @@ class CourseControllerTest {
     @Test
     void testEdit() throws Exception {
         
-        Set<GroupModel> expectedGroups = new HashSet<>(Arrays.asList(new GroupModel(1, null), new GroupModel(2, null)));
-        CourseModelWithGroups courseModel = new CourseModelWithGroups(1, COURSE_NAME, expectedGroups);
+        Set<GroupModel> expectedGroups = new HashSet<>(Arrays.asList(new GroupModel(1L, null), new GroupModel(2L, null)));
+        CourseModelWithGroups courseModel = new CourseModelWithGroups(1L, COURSE_NAME, expectedGroups);
       
         when(modelMapper.map(courseModel, Course.class)).thenReturn(course);
         
@@ -183,8 +183,8 @@ class CourseControllerTest {
     
     @Test
     void testCreate() throws Exception {
-        Course newCourse = new Course(0, COURSE_NAME);
-        CourseModel newCourseModel = new CourseModel(0, COURSE_NAME);
+        Course newCourse = new Course(null, COURSE_NAME);
+        CourseModel newCourseModel = new CourseModel(null, COURSE_NAME);
       
         when(modelMapper.map(newCourseModel, Course.class)).thenReturn(newCourse);
         when(courseService.insert(newCourse)).thenReturn(course);
@@ -204,7 +204,7 @@ class CourseControllerTest {
         
         assertAll(
                 () -> assertEquals(COURSE_NAME, formObject.getName()), 
-                () -> assertEquals(0, formObject.getId())
+                () -> assertEquals(null, formObject.getId())
                 ); 
     }
     
@@ -214,7 +214,7 @@ class CourseControllerTest {
                 .andDo(print())
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/courses"));
-        verify(courseService, times(1)).delete(1);
+        verify(courseService, times(1)).delete(1L);
         verifyNoMoreInteractions(courseService);
     }
 }

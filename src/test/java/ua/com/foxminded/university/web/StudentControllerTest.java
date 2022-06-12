@@ -61,15 +61,15 @@ class StudentControllerTest {
     @InjectMocks
     private StudentController controller;
 
-    private Group group = new Group(1, GROUP_NAME);
-    private GroupModel groupModel = new GroupModel(1, GROUP_NAME);
+    private Group group = new Group(1L, GROUP_NAME);
+    private GroupModel groupModel = new GroupModel(1L, GROUP_NAME);
     private List<Group> groups = Arrays.asList(group);
     private List<GroupModel> groupModels = Arrays.asList(groupModel);    
-    private Student student = new Student(1, STUDENT_FIRST_NAME, STUDENT_FIRST_NAME, Gender.MAIL, BIRTHDATE, group);
-    private StudentListModel studentListModel = new StudentListModel(1, student.getFirstName(), student.getLastName(),
+    private Student student = new Student(1L, STUDENT_FIRST_NAME, STUDENT_FIRST_NAME, Gender.MAIL, BIRTHDATE, group);
+    private StudentListModel studentListModel = new StudentListModel(1L, student.getFirstName(), student.getLastName(),
             student.getGroup().getName());
-    private StudentModel studentModel = new StudentModel(1, STUDENT_FIRST_NAME, STUDENT_LAST_NAME, Gender.MAIL,
-            BIRTHDATE, 1, GROUP_NAME);
+    private StudentModel studentModel = new StudentModel(1L, STUDENT_FIRST_NAME, STUDENT_LAST_NAME, Gender.MAIL,
+            BIRTHDATE, 1L, GROUP_NAME);
 
     @BeforeEach
     public void beforeEach() throws Exception {
@@ -93,7 +93,7 @@ class StudentControllerTest {
     
     @Test
     void testShow() throws Exception {
-        when(studentService.getById(1)).thenReturn(student);
+        when(studentService.getById(1L)).thenReturn(student);
         when(modelMapper.map(student, StudentModel.class)).thenReturn(studentModel);
         mockMvc.perform(get("/students/1"))
                 .andDo(print())
@@ -101,7 +101,7 @@ class StudentControllerTest {
                 .andExpect(view().name("students/show"))
                 .andExpect(model().attributeExists("student"))
                 .andExpect(model().attribute("student", studentModel));
-        verify(studentService, times(1)).getById(1);
+        verify(studentService, times(1)).getById(1L);
         verifyNoMoreInteractions(studentService);
     }
     
@@ -109,7 +109,7 @@ class StudentControllerTest {
     void testEditForm() throws Exception {
         when(groupService.getAll()).thenReturn(groups);
         when(modelMapper.map(group, GroupModel.class)).thenReturn(groupModel);
-        when(studentService.getById(1)).thenReturn(student);
+        when(studentService.getById(1L)).thenReturn(student);
         when(modelMapper.map(student, StudentModel.class)).thenReturn(studentModel);
         mockMvc.perform(get("/students/edit/1"))
                 .andDo(print())
@@ -119,7 +119,7 @@ class StudentControllerTest {
                 .andExpect(model().attribute("student", studentModel))
                 .andExpect(model().attributeExists("groups"))
                 .andExpect(model().attribute("groups", groupModels));
-        verify(studentService, times(1)).getById(1);
+        verify(studentService, times(1)).getById(1L);
         verifyNoMoreInteractions(studentService);
     }
     
@@ -139,9 +139,9 @@ class StudentControllerTest {
    
     @Test
     void testEdit() throws Exception { 
-        Student editStudent = new Student(1, STUDENT_FIRST_NAME, STUDENT_FIRST_NAME, Gender.MAIL, BIRTHDATE, new Group(1, null));
-        StudentModel editStudentModel = new StudentModel(1, STUDENT_FIRST_NAME, STUDENT_LAST_NAME, Gender.MAIL,
-                BIRTHDATE, 1, null);        
+        Student editStudent = new Student(1L, STUDENT_FIRST_NAME, STUDENT_FIRST_NAME, Gender.MAIL, BIRTHDATE, new Group(1L, null));
+        StudentModel editStudentModel = new StudentModel(1L, STUDENT_FIRST_NAME, STUDENT_LAST_NAME, Gender.MAIL,
+                BIRTHDATE, 1L, null);        
         when(modelMapper.map(editStudentModel, Student.class)).thenReturn(editStudent);   
         mockMvc.perform(post("/students/update")
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
@@ -176,9 +176,9 @@ class StudentControllerTest {
     
     @Test
     void testCreate() throws Exception {
-        Student newStudent = new Student(0, STUDENT_FIRST_NAME, STUDENT_FIRST_NAME, Gender.MAIL, BIRTHDATE, new Group(1, null));
-        StudentModel newStudentModel = new StudentModel(0, STUDENT_FIRST_NAME, STUDENT_LAST_NAME, Gender.MAIL,
-                BIRTHDATE, 1, null);        
+        Student newStudent = new Student(null, STUDENT_FIRST_NAME, STUDENT_FIRST_NAME, Gender.MAIL, BIRTHDATE, new Group(1L, null));
+        StudentModel newStudentModel = new StudentModel(null, STUDENT_FIRST_NAME, STUDENT_LAST_NAME, Gender.MAIL,
+                BIRTHDATE, 1L, null);        
         when(modelMapper.map(newStudentModel, Student.class)).thenReturn(newStudent);   
         when(studentService.insert(newStudent)).thenReturn(student);
         mockMvc.perform(post("/students/add")
@@ -199,7 +199,7 @@ class StudentControllerTest {
         StudentModel formObject = formObjectArgument.getValue(); 
         
         assertAll(
-                () -> assertEquals(0, formObject.getId()), 
+                () -> assertEquals(null, formObject.getId()), 
                 () -> assertEquals(STUDENT_FIRST_NAME, formObject.getFirstName()),
                 () -> assertEquals(STUDENT_LAST_NAME, formObject.getLastName()),
                 () -> assertEquals(Gender.MAIL, formObject.getGender()),
@@ -217,7 +217,7 @@ class StudentControllerTest {
                 .andDo(print())
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/students"));
-        verify(studentService, times(1)).delete(1);
+        verify(studentService, times(1)).delete(1L);
         verifyNoMoreInteractions(studentService);
     }
 }

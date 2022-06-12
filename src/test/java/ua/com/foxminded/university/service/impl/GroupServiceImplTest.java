@@ -24,7 +24,7 @@ class GroupServiceImplTest {
     @InjectMocks
     private GroupServiceImpl service;
 
-    private Group group = new Group(1, "group");
+    private Group group = new Group(1L, "group");
 
     @Test
     void testGetAll() {
@@ -80,7 +80,7 @@ class GroupServiceImplTest {
 
     @Test
     void testGetByCourseId() {
-        int course_id = 1;
+        Long course_id = 1L;
         List<Group> groups = new ArrayList<>();
         groups.add(group);
         when(groupDao.getByCourseId(course_id)).thenReturn(groups);

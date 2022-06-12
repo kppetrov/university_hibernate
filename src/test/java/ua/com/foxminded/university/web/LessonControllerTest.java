@@ -78,20 +78,20 @@ class LessonControllerTest {
     @InjectMocks
     private LessonController controller;
 
-    private Course course = new Course(1, COURSE_NAME);
-    private CourseModel courseModel = new CourseModel(1, COURSE_NAME);
-    private Teacher teacher = new Teacher(1, TEACHER_FIRST_NAME, TEACHER_LAST_NAME, null, null);
-    private TeacherListModel teacherModel = new TeacherListModel(1, TEACHER_FIRST_NAME, TEACHER_LAST_NAME);
-    private Period period = new Period(1, PERIOD_NAME, LocalTime.of(8, 0), LocalTime.of(9, 30));
-    private PeriodModel periodModel = new PeriodModel(1, PERIOD_NAME, LocalTime.of(8, 0), LocalTime.of(9, 30));
-    private Classroom classroom = new Classroom(1, CLASSROOM_NAME);
-    private ClassroomModel classroomModel = new ClassroomModel(1, CLASSROOM_NAME);
-    private Lesson lesson = new Lesson(1, course, LocalDate.of(2021, 01, 01), period, teacher, classroom);
-    private LessonListModel lessonListModel = new LessonListModel(1, COURSE_NAME, LocalDate.of(2021, 01, 01),
+    private Course course = new Course(1L, COURSE_NAME);
+    private CourseModel courseModel = new CourseModel(1L, COURSE_NAME);
+    private Teacher teacher = new Teacher(1L, TEACHER_FIRST_NAME, TEACHER_LAST_NAME, null, null);
+    private TeacherListModel teacherModel = new TeacherListModel(1L, TEACHER_FIRST_NAME, TEACHER_LAST_NAME);
+    private Period period = new Period(1L, PERIOD_NAME, LocalTime.of(8, 0), LocalTime.of(9, 30));
+    private PeriodModel periodModel = new PeriodModel(1L, PERIOD_NAME, LocalTime.of(8, 0), LocalTime.of(9, 30));
+    private Classroom classroom = new Classroom(1L, CLASSROOM_NAME);
+    private ClassroomModel classroomModel = new ClassroomModel(1L, CLASSROOM_NAME);
+    private Lesson lesson = new Lesson(1L, course, LocalDate.of(2021, 01, 01), period, teacher, classroom);
+    private LessonListModel lessonListModel = new LessonListModel(1L, COURSE_NAME, LocalDate.of(2021, 01, 01),
             PERIOD_NAME);
-    private LessonDetailModel lessonDetailModel = new LessonDetailModel(0, COURSE_NAME, LocalDate.of(2021, 01, 01),
+    private LessonDetailModel lessonDetailModel = new LessonDetailModel(0L, COURSE_NAME, LocalDate.of(2021, 01, 01),
             PERIOD_NAME, CLASSROOM_NAME, TEACHER_FIRST_NAME, TEACHER_LAST_NAME);
-    private LessonEditModel lessonEditModel = new LessonEditModel(1, 1, LocalDate.of(2021, 01, 01), 1, 1, 1);
+    private LessonEditModel lessonEditModel = new LessonEditModel(1L, 1L, LocalDate.of(2021, 01, 01), 1L, 1L, 1L);
     private List<Course> courses = Arrays.asList(course);
     private List<Classroom> classrooms = Arrays.asList(classroom);
     private List<Period> periods = Arrays.asList(period);
@@ -120,7 +120,7 @@ class LessonControllerTest {
     
     @Test
     void testShow() throws Exception {
-        when(lessonService.getById(1)).thenReturn(lesson);
+        when(lessonService.getById(1L)).thenReturn(lesson);
         when(modelMapper.map(lesson, LessonDetailModel.class)).thenReturn(lessonDetailModel);
         mockMvc.perform(get("/lessons/1"))
                 .andDo(print())
@@ -128,13 +128,13 @@ class LessonControllerTest {
                 .andExpect(view().name("lessons/show"))
                 .andExpect(model().attributeExists("lesson"))
                 .andExpect(model().attribute("lesson", lessonDetailModel));
-        verify(lessonService, times(1)).getById(1);
+        verify(lessonService, times(1)).getById(1L);
         verifyNoMoreInteractions(lessonService);
     }
     
     @Test
     void testEditForm() throws Exception {                
-        when(lessonService.getById(1)).thenReturn(lesson);
+        when(lessonService.getById(1L)).thenReturn(lesson);
         when(modelMapper.map(lesson, LessonEditModel.class)).thenReturn(lessonEditModel);
         when(courseService.getAll()).thenReturn(courses);
         when(modelMapper.map(course, CourseModel.class)).thenReturn(courseModel);
@@ -159,7 +159,7 @@ class LessonControllerTest {
                 .andExpect(model().attribute("periods", periodModels))
                 .andExpect(model().attributeExists("teachers"))
                 .andExpect(model().attribute("teachers", teacherModels));
-        verify(lessonService, times(1)).getById(1);
+        verify(lessonService, times(1)).getById(1L);
         verifyNoMoreInteractions(lessonService);
     }
     
@@ -265,7 +265,7 @@ class LessonControllerTest {
                 .andDo(print())
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/lessons"));
-        verify(lessonService, times(1)).delete(1);
+        verify(lessonService, times(1)).delete(1L);
         verifyNoMoreInteractions(lessonService);
     }
 }

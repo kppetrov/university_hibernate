@@ -33,7 +33,7 @@ public class PeriodServiceImpl implements PeriodService {
     }
 
     @Override
-    public Period getById(int id) {
+    public Period getById(Long id) {
         try {
             return periodDao.getById(id);
         } catch (DaoException e) {
@@ -60,7 +60,7 @@ public class PeriodServiceImpl implements PeriodService {
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(Long id) {
         try {
             periodDao.delete(id);
         } catch (DaoException e) {

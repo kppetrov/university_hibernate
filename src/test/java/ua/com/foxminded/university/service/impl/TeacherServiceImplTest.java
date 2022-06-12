@@ -26,7 +26,7 @@ class TeacherServiceImplTest {
     @InjectMocks
     private TeacherServiceImpl service;
 
-    private Teacher teacher = new Teacher(1, "first_name", "last_name", Gender.MAIL, LocalDate.of(1971, 01, 01));
+    private Teacher teacher = new Teacher(1L, "first_name", "last_name", Gender.MAIL, LocalDate.of(1971, 01, 01));
 
     @Test
     void testGetAll() {

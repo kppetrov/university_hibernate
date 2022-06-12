@@ -28,7 +28,7 @@ public class Group {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private Long id;
 
     @Column(name = "name", unique = true)
     private String name;
@@ -38,7 +38,7 @@ public class Group {
     @OneToMany(mappedBy = "group", fetch = FetchType.LAZY)
     private Set<Student> students = new HashSet<>();
 
-    public Group(int id, String name) {
+    public Group(Long id, String name) {
         this.id = id;
         this.name = name;
     }

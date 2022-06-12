@@ -17,7 +17,7 @@ import ua.com.foxminded.university.model.Gender;
 @AllArgsConstructor
 @NoArgsConstructor
 public class StudentModel {
-    private int id;
+    private Long id;
     @NotBlank(message = "{validation.person.firstName.NotBlank.message}")
     private String firstName;
     @NotBlank(message = "{validation.person.lastName.NotBlank.message}")
@@ -26,6 +26,6 @@ public class StudentModel {
     @DateTimeFormat(iso = ISO.DATE)
     @NotNull(message = "{validation.person.birthdate.NotNull.message}")
     private LocalDate birthdate;
-    private int groupId;
+    private Long groupId;
     private String groupName; 
 }

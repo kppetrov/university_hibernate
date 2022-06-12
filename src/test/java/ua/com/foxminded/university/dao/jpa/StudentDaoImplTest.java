@@ -27,12 +27,12 @@ class StudentDaoImplTest {
     @Autowired
     private StudentDaoImpl dao;
     
-    private Group group1 = new Group(1, "group1");
-    private Group group2 = new Group(2, "group2");
-    private Student student1 = new Student(1, "first_name1", "last_name1", Gender.MAIL, LocalDate.of(2001, 01, 01), group1);
-    private Student student2 = new Student(2, "first_name2", "last_name2", Gender.FEMAIL, LocalDate.of(2002, 02, 02), group1);
-    private Student student3 = new Student(3, "first_name3", "last_name3", Gender.FEMAIL, LocalDate.of(2003, 03, 03), group2);
-    private Student student4 = new Student(4, "first_name4", "last_name4", Gender.FEMAIL, LocalDate.of(2004, 04, 04), group2);
+    private Group group1 = new Group(1L, "group1");
+    private Group group2 = new Group(2L, "group2");
+    private Student student1 = new Student(1L, "first_name1", "last_name1", Gender.MAIL, LocalDate.of(2001, 01, 01), group1);
+    private Student student2 = new Student(2L, "first_name2", "last_name2", Gender.FEMAIL, LocalDate.of(2002, 02, 02), group1);
+    private Student student3 = new Student(3L, "first_name3", "last_name3", Gender.FEMAIL, LocalDate.of(2003, 03, 03), group2);
+    private Student student4 = new Student(4L, "first_name4", "last_name4", Gender.FEMAIL, LocalDate.of(2004, 04, 04), group2);
 
     @Test
     @Sql(value = { "/insert-data.sql" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
@@ -56,7 +56,7 @@ class StudentDaoImplTest {
     @Test
     @Sql(value = { "/insert-data.sql" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
     void shouldThrowExceptionWhenStudentWithSuchIdNotExist() {
-        int id = 10;
+        Long id = 10L;
         String msg = String.format(ID_NOT_EXIST, Student.class, id);        
         DaoException exception = assertThrows(DaoException.class, () -> dao.getById(id));
         assertEquals(msg, exception.getMessage());
@@ -82,7 +82,7 @@ class StudentDaoImplTest {
     @Test
     @Sql(value = { "/insert-data.sql" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
     void testUpdate() {
-        Student student = new Student(1, "new first_name", "new last_name", Gender.MAIL, LocalDate.of(1980, 01, 01), group2);
+        Student student = new Student(1L, "new first_name", "new last_name", Gender.MAIL, LocalDate.of(1980, 01, 01), group2);
         dao.update(student);
         Student actual = dao.getById(student.getId());
         assertAll(
@@ -94,7 +94,7 @@ class StudentDaoImplTest {
     @Test
     @Sql(value = { "/insert-data.sql" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
     void testDelete() {
-        int id = 1;
+        Long id = 1L;
         String msg = String.format(ID_NOT_EXIST, Student.class, id);
         dao.delete(id);        
         DaoException exception = assertThrows(DaoException.class, () -> dao.getById(id));

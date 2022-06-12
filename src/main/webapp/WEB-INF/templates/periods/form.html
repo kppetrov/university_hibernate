@@ -7,7 +7,7 @@
     <div th:replace="~{index :: header('periods')}"></div>
     <main class="container">
 		<form th:object="${period}" 
-		th:action="@{/periods/{path}(path=*{id == 0 ? 'add' : 'update'})}" 
+		th:action="@{/periods/{path}(path=*{id == null ? 'add' : 'update'})}" 
 		th:method="post">
           <div class="mb-3">
               <input type="hidden" th:field="*{id}" />

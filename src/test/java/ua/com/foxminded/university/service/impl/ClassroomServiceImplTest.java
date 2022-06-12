@@ -24,7 +24,7 @@ class ClassroomServiceImplTest {
     @InjectMocks
     private ClassroomServiceImpl service;
     
-    private Classroom classroom = new Classroom(1, "classroom");
+    private Classroom classroom = new Classroom(1L, "classroom");
 
     @Test
     void testGetAll() {

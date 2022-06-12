@@ -17,7 +17,7 @@ import ua.com.foxminded.university.model.Gender;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TeacherModel {
-    private int id;
+    private Long id;
     @NotBlank(message = "{validation.person.firstName.NotBlank.message}")
     private String firstName;
     @NotBlank(message = "{validation.person.lastName.NotBlank.message}")

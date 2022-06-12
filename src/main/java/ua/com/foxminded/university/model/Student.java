@@ -23,7 +23,7 @@ public class Student extends AbstractPerson {
     @JoinColumn(name = "group_id")
     private Group group;
 
-    public Student(int id, String firstName, String lastName, Gender gender, LocalDate birthdate, Group group) {
+    public Student(Long id, String firstName, String lastName, Gender gender, LocalDate birthdate, Group group) {
         super(id, firstName, lastName, gender, birthdate);
         this.group = group;
     }

@@ -24,9 +24,9 @@ class ClassroomDaoImplTest {
     @Autowired
     private ClassroomDaoImpl dao;
 
-    private Classroom classroom1 = new Classroom(1, "classroom1");
-    private Classroom classroom2 = new Classroom(2, "classroom2");
-    private Classroom classroom3 = new Classroom(3, "classroom3");
+    private Classroom classroom1 = new Classroom(1L, "classroom1");
+    private Classroom classroom2 = new Classroom(2L, "classroom2");
+    private Classroom classroom3 = new Classroom(3L, "classroom3");
 
     @Test
     @Sql(value = { "/insert-data.sql" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
@@ -49,7 +49,7 @@ class ClassroomDaoImplTest {
     @Test
     @Sql(value = { "/insert-data.sql" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
     void shouldThrowExceptionWhenClassroomWithSuchIdNotExist() {
-        int id = 10;
+        Long id = 10L;
         String msg = String.format(ID_NOT_EXIST, Classroom.class, id);
         DaoException exception = assertThrows(DaoException.class, () -> dao.getById(id));
         assertEquals(msg, exception.getMessage());
@@ -67,7 +67,7 @@ class ClassroomDaoImplTest {
     @Test
     @Sql(value = { "/insert-data.sql" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
     void testUpdate() {
-        Classroom classroom = new Classroom(1, "new name");
+        Classroom classroom = new Classroom(1L, "new name");
         dao.update(classroom);
         Classroom actual = dao.getById(classroom.getId());
         assertEquals(classroom, actual);
@@ -76,7 +76,7 @@ class ClassroomDaoImplTest {
     @Test
     @Sql(value = { "/insert-data.sql" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
     void testDelete() {
-        int id = 3;
+        Long id = 3L;
         dao.delete(id);
         String msg = String.format(ID_NOT_EXIST, Classroom.class, id);
         DaoException exception = assertThrows(DaoException.class, () -> dao.getById(id));

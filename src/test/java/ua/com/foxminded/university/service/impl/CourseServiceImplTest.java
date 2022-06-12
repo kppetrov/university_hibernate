@@ -24,7 +24,7 @@ class CourseServiceImplTest {
     @InjectMocks
     private CourseServiceImpl service;
 
-    private Course course = new Course(1, "course");    
+    private Course course = new Course(1L, "course");    
     
     @Test
     void testGetAll() {

@@ -51,8 +51,8 @@ class PeriodControllerTest {
     @InjectMocks
     private PeriodController controller;
 
-    private Period period = new Period(1, PERIOD_NAME, LocalTime.of(8, 0), LocalTime.of(9, 30));
-    private PeriodModel periodModel = new PeriodModel(1, PERIOD_NAME, LocalTime.of(8, 0), LocalTime.of(9, 30));
+    private Period period = new Period(1L, PERIOD_NAME, LocalTime.of(8, 0), LocalTime.of(9, 30));
+    private PeriodModel periodModel = new PeriodModel(1L, PERIOD_NAME, LocalTime.of(8, 0), LocalTime.of(9, 30));
 
     @BeforeEach
     public void beforeEach() throws Exception {
@@ -76,7 +76,7 @@ class PeriodControllerTest {
     
     @Test
     void testShow() throws Exception {
-        when(periodService.getById(1)).thenReturn(period);
+        when(periodService.getById(1L)).thenReturn(period);
         when(modelMapper.map(period, PeriodModel.class)).thenReturn(periodModel);
         mockMvc.perform(get("/periods/1"))
                 .andDo(print())
@@ -84,13 +84,13 @@ class PeriodControllerTest {
                 .andExpect(view().name("periods/show"))
                 .andExpect(model().attributeExists("period"))
                 .andExpect(model().attribute("period", periodModel));
-        verify(periodService, times(1)).getById(1);
+        verify(periodService, times(1)).getById(1L);
         verifyNoMoreInteractions(periodService);
     }
     
     @Test
     void testEditForm() throws Exception {
-        when(periodService.getById(1)).thenReturn(period);
+        when(periodService.getById(1L)).thenReturn(period);
         when(modelMapper.map(period, PeriodModel.class)).thenReturn(periodModel);
         mockMvc.perform(get("/periods/edit/1"))
                 .andDo(print())
@@ -98,7 +98,7 @@ class PeriodControllerTest {
                 .andExpect(view().name("periods/form"))
                 .andExpect(model().attributeExists("period"))
                 .andExpect(model().attribute("period", periodModel));
-        verify(periodService, times(1)).getById(1);
+        verify(periodService, times(1)).getById(1L);
         verifyNoMoreInteractions(periodService);
     }
     
@@ -142,8 +142,8 @@ class PeriodControllerTest {
     
     @Test
     void testCreate() throws Exception {
-        Period newPeriod = new Period(0, PERIOD_NAME, LocalTime.of(8, 0), LocalTime.of(9, 30));
-        PeriodModel newPeriodModel = new PeriodModel(0, PERIOD_NAME, LocalTime.of(8, 0), LocalTime.of(9, 30));
+        Period newPeriod = new Period(null, PERIOD_NAME, LocalTime.of(8, 0), LocalTime.of(9, 30));
+        PeriodModel newPeriodModel = new PeriodModel(null, PERIOD_NAME, LocalTime.of(8, 0), LocalTime.of(9, 30));
       
         when(modelMapper.map(newPeriodModel, Period.class)).thenReturn(newPeriod);
         when(periodService.insert(newPeriod)).thenReturn(newPeriod);
@@ -165,7 +165,7 @@ class PeriodControllerTest {
         
         assertAll(
                 () -> assertEquals(PERIOD_NAME, formObject.getName()), 
-                () -> assertEquals(0, formObject.getId())
+                () -> assertEquals(null, formObject.getId())
                 ); 
         
         verify(periodService, times(1)).insert(newPeriod);
@@ -178,7 +178,7 @@ class PeriodControllerTest {
                 .andDo(print())
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/periods"));
-        verify(periodService, times(1)).delete(1);
+        verify(periodService, times(1)).delete(1L);
         verifyNoMoreInteractions(periodService);
     }
 }

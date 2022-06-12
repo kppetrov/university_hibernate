@@ -59,7 +59,7 @@ public class LessonController {
     }
     
     @GetMapping(value = "/{id}")
-    public String show(@PathVariable("id") Integer id, Model model) {
+    public String show(@PathVariable("id") Long id, Model model) {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Showing lesson. id = {}", id);
         }
@@ -69,7 +69,7 @@ public class LessonController {
     }
     
     @GetMapping(value = "/edit/{id}")
-    public String editForm(@PathVariable("id") Integer id, Model model) {
+    public String editForm(@PathVariable("id") Long id, Model model) {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Editing lesson. id = {}", id);
         }
@@ -132,7 +132,7 @@ public class LessonController {
     }
 
     @GetMapping(value = "/remove/{id}")
-    public String remove(@PathVariable("id") Integer id) {
+    public String remove(@PathVariable("id") Long id) {
         lessonService.delete(id);
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("Lesson has been deleted. id = {}", id);
